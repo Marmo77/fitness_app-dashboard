@@ -1,20 +1,133 @@
-import AuthLayout from "@/app/(auth)/layout"
 import Link from "next/link"
+import { GitCommitHorizontal } from "lucide-react"
+import { AuthShell } from "@/app/(auth)/auth-shell"
 
+const signUpData = {
+    eyebrow: "StrengthMap",
+    title: "Get started",
+    description: "Create your account and start tracking progress.",
+    submitLabel: "Sign up",
+    secondaryText: "Have an account?",
+    secondaryHref: "/sign-in",
+    secondaryLabel: "Sign in",
+}
 
-const SignUpPage = () => {
+function GoogleIcon() {
     return (
-        <div className="w-full max-w-md">
-            <AuthLayout>
-                <div>
-                    <h1 className="text-4xl font-bold">Register Form</h1>
-                    <Link href="/sign-in" className="text-blue-200 hover:underline">
-                        <span className="text-blue-500">Sign In</span>
-                    </Link>
-                </div>
-            </AuthLayout>
-        </div>
+        <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
+            <path
+                d="M21.805 10.023h-9.72v3.955h5.573c-.24 1.27-.96 2.347-2.04 3.067v2.55h3.3c1.932-1.78 3.047-4.4 3.047-7.525 0-.683-.06-1.343-.16-2.047z"
+                fill="currentColor"
+            />
+            <path
+                d="M12.084 22c2.76 0 5.077-.912 6.77-2.473l-3.3-2.55c-.912.612-2.077.983-3.47.983-2.664 0-4.92-1.8-5.724-4.223H2.95v2.63A10.214 10.214 0 0 0 12.084 22z"
+                fill="currentColor"
+                className="opacity-80"
+            />
+            <path
+                d="M6.36 13.737A6.13 6.13 0 0 1 6.048 12c0-.603.108-1.188.312-1.737v-2.63H2.95A10.214 10.214 0 0 0 1.884 12c0 1.645.396 3.203 1.066 4.367l3.41-2.63z"
+                fill="currentColor"
+                className="opacity-60"
+            />
+            <path
+                d="M12.084 6.04c1.5 0 2.845.516 3.905 1.53l2.93-2.93C17.156 2.995 14.838 2 12.084 2 8.102 2 4.666 4.288 2.95 7.633l3.41 2.63c.804-2.424 3.06-4.223 5.724-4.223z"
+                fill="currentColor"
+                className="opacity-90"
+            />
+        </svg>
     )
 }
 
-export default SignUpPage
+export default function SignUpPage() {
+    return (
+        <AuthShell
+            eyebrow={signUpData.eyebrow}
+            title={signUpData.title}
+            description={signUpData.description}
+        >
+            <form className="space-y-5">
+                <div className="space-y-3">
+                    <button
+                        type="button"
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-input bg-background text-sm font-medium text-foreground transition hover:bg-accent hover:text-accent-foreground"
+                    >
+                        <GoogleIcon />
+                        Continue with Google
+                    </button>
+
+                    <button
+                        type="button"
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-input bg-background text-sm font-medium text-foreground transition hover:bg-accent hover:text-accent-foreground"
+                    >
+                        <GitCommitHorizontal className="size-4" />
+                        Continue with GitHub
+                    </button>
+                </div>
+
+                <div className="relative py-1">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-border" />
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="bg-card px-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                            or
+                        </span>
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium text-foreground">
+                        Full name
+                    </label>
+                    <input
+                        id="name"
+                        type="text"
+                        placeholder="John Doe"
+                        className="h-12 w-full rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/80 focus:border-primary focus:ring-4 focus:ring-primary/10"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium text-foreground">
+                        Email
+                    </label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        className="h-12 w-full rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/80 focus:border-primary focus:ring-4 focus:ring-primary/10"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="password" className="text-sm font-medium text-foreground">
+                        Password
+                    </label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Create a password"
+                        className="h-12 w-full rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/80 focus:border-primary focus:ring-4 focus:ring-primary/10"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="h-12 w-full rounded-2xl bg-primary text-sm font-semibold text-primary-foreground transition hover:opacity-95"
+                >
+                    {signUpData.submitLabel}
+                </button>
+
+                <p className="text-center text-sm text-muted-foreground">
+                    {signUpData.secondaryText}{" "}
+                    <Link
+                        href={signUpData.secondaryHref}
+                        className="font-medium text-foreground transition hover:text-primary"
+                    >
+                        {signUpData.secondaryLabel}
+                    </Link>
+                </p>
+            </form>
+        </AuthShell>
+    )
+}
