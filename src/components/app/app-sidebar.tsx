@@ -6,21 +6,20 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { AppNavLinks } from "@/components/app/app-nav-links"
-import { NavUser } from "./app-nav-user"
+import { NavUser } from "@/components/app/app-nav-user"
 
-
-type UserProp = {
+type AppSidebarUser = {
   name: string
   email: string
   avatar: string
 }
 
-export function AppSidebar({ User }: { User: UserProp }) {
+export function AppSidebar({ user }: { user: AppSidebarUser }) {
   return (
     <Sidebar collapsible="icon" variant="sidebar">
-      <SidebarHeader className="px-4 py-4">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+      <SidebarHeader className="p-3">
+        <div className="flex items-center gap-3 rounded-2xl border bg-card/60 p-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground">
             F
           </div>
 
@@ -37,16 +36,8 @@ export function AppSidebar({ User }: { User: UserProp }) {
         <AppNavLinks />
       </SidebarContent>
 
-      {/* FOOTER */}
-
-      <SidebarFooter className="">
-        {/* <div className="rounded-xl border bg-card/50 p-3 group-data-[collapsible=icon]:hidden">
-          <p className="text-xs font-medium">Upgrade plan</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Unlock more analytics and tracking.
-          </p>
-        </div> */}
-        <NavUser user={User} />
+      <SidebarFooter className="p-3">
+        <NavUser user={user} />
       </SidebarFooter>
 
       <SidebarRail />

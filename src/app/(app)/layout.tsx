@@ -22,22 +22,18 @@ export default async function AppLayout({
         redirect("/login")
     }
 
-    const User: {
-        name: string,
-        email: string,
-        avatar: string,
-    } = {
-        name: user.user_metadata.name || "User",
+    const currentUser = {
+        name: user.user_metadata?.name || user.user_metadata?.full_name || "User",
         email: user.email || "",
-        avatar: user.user_metadata.avatar_url || "",
+        avatar: user.user_metadata?.avatar_url || "",
     }
 
     return (
         <SidebarProvider defaultOpen>
-            <AppSidebar User={User} />
+            <AppSidebar user={currentUser} />
 
-            <SidebarInset>
-                <header className="flex h-16 items-center gap-3 border-b px-4">
+            <SidebarInset className="min-w-0">
+                <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
                     <SidebarTrigger />
                     <div>
                         <h1 className="text-sm font-medium text-muted-foreground">
@@ -46,7 +42,7 @@ export default async function AppLayout({
                     </div>
                 </header>
 
-                <main className="flex-1 p-6">{children}</main>
+                <main className="flex-1 p-4 md:p-6">{children}</main>
             </SidebarInset>
         </SidebarProvider>
     )

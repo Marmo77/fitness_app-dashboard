@@ -40,20 +40,25 @@ export function AppNavLinks() {
 
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>Main</SidebarGroupLabel>
+            <SidebarGroupLabel>Navigation</SidebarGroupLabel>
 
             <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="gap-1">
                     {links.map((link) => {
                         const Icon = link.icon
                         const isActive =
                             pathname === link.href || pathname.startsWith(`${link.href}/`)
 
                         return (
-                            <SidebarMenuItem key={link.href}>
+                            <SidebarMenuItem key={link.href} className="cursor-pointer">
                                 <Link href={link.href}>
-                                    <SidebarMenuButton className="lg:h-12 h-9" isActive={isActive} tooltip={link.label}>
-                                        <Icon />
+                                    <SidebarMenuButton
+
+                                        isActive={isActive}
+                                        tooltip={link.label}
+                                        className="h-11 rounded-xl text-base md:h-10"
+                                    >
+                                        <Icon className="h-7 w-7" />
                                         <span>{link.label}</span>
                                     </SidebarMenuButton>
                                 </Link>
