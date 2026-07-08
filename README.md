@@ -1,6 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fitness App Dashboard
 
-## Getting Started
+A responsive and modern fitness application dashboard built with Next.js, TypeScript, and Tailwind CSS. This application features a comprehensive dashboard for monitoring workouts, nutrition, and overall fitness progress.
+
+## 🚀 Getting Started
 
 First, run the development server:
 
