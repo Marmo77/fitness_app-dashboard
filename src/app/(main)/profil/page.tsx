@@ -1,4 +1,5 @@
 import { LogoutButton } from '@/components/auth/logout-button'
+import AccessSettings from '@/components/profil/AccessSettings';
 import UserStatus from '@/components/profil/UserStatus';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -40,7 +41,7 @@ const ProfilPage = async () => {
 
                 {/* Acess Settings */}
                 <section className='bg-amber-400 flex-1'>
-
+                    <AccessSettings />
                 </section>
             </div>
 

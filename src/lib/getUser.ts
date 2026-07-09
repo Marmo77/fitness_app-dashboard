@@ -37,11 +37,12 @@ export async function getUserProfile(): Promise<UserInformations | null> {
 }
 
 
-export type UserAdmin = {
+export type AdminInformation = {
     id: string;
     email: string;
-    role: "admin" | "user";
-    given_at: string;
+    given_by: string | null;
+    given_at: string | null;
+    is_admin: boolean;
 }
 
 export async function isUserAdmin(): Promise<boolean> {
@@ -61,4 +62,15 @@ export async function isUserAdmin(): Promise<boolean> {
     }
 
     return false;
+}
+
+
+export async function AdminsList(): Promise<AdminInformation[] | null> {
+    const supabase = await createClient();
+    const { data: admin } = await supabase.from("Admins").select("*").eq("is_admin", true);
+
+    if (admin) {
+        return admin as AdminInformation[];
+    }
+    return null;
 }
