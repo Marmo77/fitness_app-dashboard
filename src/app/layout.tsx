@@ -41,8 +41,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full font-sans flex flex-col bg-background text-foreground">
-        <Navbar />
-        {/* flex-1 sprawia, że główny content wypełnia dostępną przestrzeń */}
         <div className="flex-1 flex flex-col">
           {children}
         </div>

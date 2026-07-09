@@ -7,23 +7,56 @@ import { company, dummyUser } from "@/lib/constants";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const Navbar = () => {
+import { usePathname } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
+
+interface NavbarProps {
+    user: User | null;
+}
+
+const Navbar = ({ user }: NavbarProps) => {
+    const pathname = usePathname();
     const [companyFront, companyBack] = company.name.split(" ");
     const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+    if (pathname === "/login") return null;
+
     const toggleMenu = () => setIsMobileOpen(!isMobileOpen);
+
+    const displayName = user?.user_metadata.name || user?.email?.split("@")[0] || "Użytkownik";
+    const avatarUrl = user?.user_metadata.avatar_url || null;
+    const initial = displayName.charAt(0).toUpperCase();
+
+    const isActive = (href: string) => pathname === href;
+
+    const menuItems = [
+        {
+            label: "Home",
+            href: "/",
+        },
+        {
+            label: "Dodaj",
+            href: "/dodaj",
+        },
+        {
+            label: "Historia",
+            href: "/historia",
+        },
+    ];
+
+
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
 
-                {/* LWA STRONA: Logo, Wyszukiwarka, Akcje */}
+                {/* LEWA STRONA: Logo, Wyszukiwarka, Akcje */}
                 <div className="flex items-center gap-4 lg:gap-6 flex-1">
-                    <Link href="/" className="font-bold text-lg tracking-tight shrink-0">
+                    <Link href="/" className="font-bold text-2xl tracking-tight shrink-0">
                         <span className="text-primary">{companyFront}</span>
-                        {companyBack && <span className="text-muted-foreground"> {companyBack}</span>}
+                        {companyBack && <span className="text-foreground"> {companyBack}</span>}
                     </Link>
 
                     {/* Desktop Wyszukiwarka i Przyciski */}
@@ -46,24 +79,32 @@ const Navbar = () => {
                 </div>
 
                 {/* ŚRODEK: Nawigacja Desktop */}
-                <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-                    <Link href="/" className="text-foreground/80 hover:text-foreground transition-colors">Home</Link>
-                    <Link href="/dodaj" className="text-foreground/80 hover:text-foreground transition-colors">Dodaj</Link>
-                    <Link href="/historia" className="text-foreground/80 hover:text-foreground transition-colors">Historia</Link>
+                <nav className="hidden md:flex items-center gap-6 text-sm flex-1 font-medium">
+                    {menuItems.map((item) => (
+                        <div className="relative group" key={item.href}>
+                            <Link
+                                href={item.href}
+                                className={`text-foreground/80 hover:text-primary transition-colors ${isActive(item.href) ? "text-primary/95" : ""}`}
+                            >
+                                {item.label}
+                            </Link>
+                            <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out" />
+                        </div>
+                    ))}
                 </nav>
 
                 {/* PRAWA STRONA: Profil i Hamburger */}
                 <div className="flex items-center gap-4">
                     <div className="hidden md:flex items-center gap-3">
                         <span className="text-sm font-medium text-foreground">
-                            {dummyUser.username}
+                            {displayName}
                         </span>
-                        <Avatar className="h-8 w-8 border border-border">
+                        <Avatar className="h-8 w-8 border border-border" >
+                            <AvatarImage src={avatarUrl} alt={displayName} />
                             <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                {dummyUser.username.charAt(0).toUpperCase()}
+                                {initial}
                             </AvatarFallback>
                         </Avatar>
-                        <LogoutButton />
                     </div>
 
                     {/* Hamburger Mobile */}
@@ -110,7 +151,7 @@ const Navbar = () => {
                             </Avatar>
                             <span className="text-sm font-medium text-foreground">{dummyUser.username}</span>
                         </div>
-                        <LogoutButton short={true} />
+                        <LogoutButton />
                     </div>
                 </div>
             )}
