@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/lib/supabase/client"
-import { FaGithub, FaGoogle } from "react-icons/fa6"
+import { Provider } from "@supabase/supabase-js"
+import { FaGoogle } from "react-icons/fa6"
 
-export function OAuthButtons() {
+export function OAuthButton() {
     const supabase = createClient()
 
-    const signInWithProvider = async (provider: "google" | "github") => {
+    const signInWithProvider = async (provider: Provider) => {
         await supabase.auth.signInWithOAuth({
             provider,
             options: {
@@ -24,18 +25,8 @@ export function OAuthButtons() {
                 className="w-full"
                 onClick={() => signInWithProvider("google")}
             >
-                <FaGoogle className="mr-2 h-4 w-4" />
+                <FaGoogle className="mr-1 h-4 w-4" />
                 Zaloguj się przez Google
-            </Button>
-
-            <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => signInWithProvider("github")}
-            >
-                <FaGithub className="mr-2 h-4 w-4" />
-                Zaloguj się przez GitHub
             </Button>
         </div>
     )
