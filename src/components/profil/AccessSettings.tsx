@@ -26,8 +26,8 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                             <TableHead>Email</TableHead>
                             <TableHead>Imię i nazwisko</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Nadany przez</TableHead>
-                            <TableHead className='text-center'>Akcje</TableHead>
+                            <TableHead>Nadany/Zabrany przez</TableHead>
+                            <TableHead>Akcje</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -40,7 +40,7 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                                     <TableCell className={userIsAdmin ? 'text-primary font-mono' : ''}>{admin.email}</TableCell>
                                     <TableCell>{admin.email.split("@")[0]}</TableCell>
                                     <TableCell className={`font-mono ${admin.is_admin === true ? "text-primary" : "text-red-500"}`}>{admin.is_admin ? "Admin" : "User"}</TableCell>
-                                    <TableCell className='text-xs text-muted-foreground'>{admin.granted_by}</TableCell>
+                                    <TableCell className='text-xs text-muted-foreground'>{admin.granted_by ? admin.granted_by : admin.revoked_by}</TableCell>
                                     <TableCell className='text-center flex gap-2 justify-center'>
                                         <GrantRevokeButton email={admin.email} button_type="grant" disabled={admin.is_admin || userIsAdmin} />
                                         <GrantRevokeButton email={admin.email} button_type="revoke" disabled={!admin.is_admin || userIsAdmin} />

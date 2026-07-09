@@ -1,13 +1,14 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { getUserData } from "./getUser";
+import { getUserData } from "./getUserData";
 import { revalidatePath } from "next/cache";
 
 export type AdminInformation = {
     id: string;
     email: string;
     granted_by: string | null;
+    revoked_by: string | null;
     granted_at: string | null;
     is_admin: boolean;
 }
@@ -62,7 +63,7 @@ export async function RevokeAdmin(email: string) {
         await supabase.from("Admins").update({
             is_admin: false,
             revoked_by: revoked_by,
-            granted_by: "revoked"
+            granted_by: null,
         }).eq("email", email);
         //refresh zeby zobaczyc zmiane odrazu
         revalidatePath("/profil");
@@ -85,7 +86,7 @@ export async function GrantAdmin(email: string) {
         await supabase.from("Admins").update({
             is_admin: true,
             granted_by: granted_by,
-            revoked_by: "granted",
+            revoked_by: null,
             granted_at: new Date().toISOString(),
         }).eq("email", email);
         //refresh zeby zobaczyc zmiane odrazu
