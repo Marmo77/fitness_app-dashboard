@@ -1,7 +1,7 @@
 import { AdminsList, isUserAdmin, AdminInformation } from '@/lib/AdminActions';
-import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
+import { ShieldAlert } from 'lucide-react';
 
 const AccessSettings = async ({ user_email }: { user_email: string }) => {
     const AdminList: AdminInformation[] | null = await AdminsList();
@@ -51,8 +51,16 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                     </TableBody>
                 </Table>
             </section>) : (
-            <section className='bg-amber-300 flex-1'>
-                <h2>Brak uprawnień do zarządzania dostępem</h2>
+            <section className="w-full flex flex-col items-center justify-center rounded-2xl bg-card border border-border shadow-sm p-8 sm:p-12 text-center min-h-[300px]">
+                <div className="p-4 bg-amber-500/10 rounded-full mb-5">
+                    <ShieldAlert className="h-10 w-10 text-amber-500" />
+                </div>
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                    Brak uprawnień do zarządzania
+                </h2>
+                <p className="text-sm text-muted-foreground mt-2 max-w-md">
+                    Twoje konto nie posiada uprawnień administratora wymaganych do przeglądania i edycji ról użytkowników. Skontaktuj się z właścicielem systemu, aby uzyskać dostęp.
+                </p>
             </section>
         )
     )
