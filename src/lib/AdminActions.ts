@@ -25,9 +25,9 @@ export async function isUserAdmin(): Promise<boolean> {
     const verifyEmail = user.email?.toLowerCase();
 
 
-    const { data: admin } = await supabase.from("Admins").select("email").eq("email", verifyEmail).single();
+    const { data: admin } = await supabase.from("Admins").select("email, is_admin").eq("email", verifyEmail).single();
 
-    if (admin?.email === verifyEmail) {
+    if (admin?.email === verifyEmail && admin?.is_admin === true) {
         return true;
     }
 

@@ -41,7 +41,7 @@ const ProfilPage = async () => {
 
                 {/* Acess Settings */}
                 <section className='flex-1 bg-card p-4'>
-                    <AccessSettings />
+                    <AccessSettings user_email={userProfile?.email || ""} />
                 </section>
             </div>
 

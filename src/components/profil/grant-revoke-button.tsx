@@ -8,7 +8,7 @@ import { Crown, Trash } from "lucide-react";
 
 
 // Button that Grant or Revoke admin status
-export default function GrantRevokeButton({ email, button_type }: { email: string, button_type: "grant" | "revoke" }) {
+export default function GrantRevokeButton({ email, button_type, disabled = false }: { email: string, button_type: "grant" | "revoke", disabled?: boolean }) {
     const [isPending, startTransition] = useTransition();
 
     const handlePermissions = () => {
@@ -27,7 +27,7 @@ export default function GrantRevokeButton({ email, button_type }: { email: strin
             variant="outline"
             className={`group duration-500 transition-all ${button_type === "grant" ? "hover:bg-primary/10" : "hover:bg-destructive/10"}`}
             onClick={handlePermissions}
-            disabled={isPending}
+            disabled={isPending || disabled}
         >
             {button_type === "grant" ? (
                 <Crown className='group-hover:-rotate-25 group-hover:-translate-y-0.5 duration-300 transition-all text-primary' />
