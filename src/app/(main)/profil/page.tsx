@@ -1,9 +1,12 @@
 import { LogoutButton } from '@/components/auth/logout-button'
 import AccessSettings from '@/components/profil/AccessSettings';
+import AddAdmin from '@/components/profil/AddAdmin';
 import UserStatus from '@/components/profil/UserStatus';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getUserProfile } from '@/lib/getUserData'
+import { UserPlus } from 'lucide-react';
 
 
 
@@ -48,9 +51,15 @@ const ProfilPage = async () => {
 
             {/* Ustawienia Dostępu */}
             <section className="w-full flex flex-col rounded-2xl bg-card border border-border shadow-sm">
-                <div className="p-6 pb-4">
-                    <h2 className="text-lg font-semibold tracking-tight text-foreground">Ustawienia dostępu</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Zarządzaj swoimi uprawnieniami i rolami w systemie.</p>
+                <div className='flex justify-between'>
+
+                    <div className="p-6 pb-4">
+                        <h2 className="text-lg font-semibold tracking-tight text-foreground">Ustawienia dostępu</h2>
+                        <p className="text-sm text-muted-foreground mt-1">Zarządzaj swoimi uprawnieniami i rolami w systemie.</p>
+                    </div>
+                    <div className='self-center mr-6'>
+                        <AddAdmin />
+                    </div>
                 </div>
 
                 <Separator className="w-full" />

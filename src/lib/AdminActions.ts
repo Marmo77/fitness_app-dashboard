@@ -97,4 +97,46 @@ export async function GrantAdmin(email: string) {
     return false;
 }
 
-// if user is admin, he cannot revoke admin status from himself
+// Add user to Admins list by AdminButton.tsx
+
+export async function AddUserToAdmins(email: string) {
+    const user = await getUserData();
+    const granted_by = user?.email || "unknown";
+
+    const supabase = await createClient();
+    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+
+    // if admin is not in list, add him
+    if (!admin) {
+        await supabase.from("Admins").insert({
+            email: email,
+            is_admin: true,
+            granted_by: granted_by,
+            revoked_by: null,
+            granted_at: new Date().toISOString(),
+        });
+        //refresh zeby zobaczyc zmiane odrazu
+        revalidatePath("/profil");
+        return true;
+    }
+
+    // if admin is in list, do nothing (prevent adding same admin twice)
+    return false;
+}
+
+
+// Delete from Admins Panel (btn)
+
+export async function DeleteAdmin(email: string) {
+    const supabase = await createClient();
+    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+
+    if (admin) {
+        await supabase.from("Admins").delete().eq("email", email);
+        //refresh zeby zobaczyc zmiane odrazu
+        revalidatePath("/profil");
+        return true;
+    }
+
+    return false;
+}

@@ -2,6 +2,7 @@ import { AdminsList, isUserAdmin, AdminInformation } from '@/lib/AdminActions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
+import DeleteAdminBtn from './delete-admin-btn';
 
 const AccessSettings = async ({ user_email }: { user_email: string }) => {
     const AdminList: AdminInformation[] | null = await AdminsList();
@@ -28,6 +29,7 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                             <TableHead>Status</TableHead>
                             <TableHead>Nadany/Zabrany przez</TableHead>
                             <TableHead>Akcje</TableHead>
+                            <TableHead>Usuń</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -44,6 +46,9 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                                     <TableCell className='text-center flex gap-2 justify-center'>
                                         <GrantRevokeButton email={admin.email} button_type="grant" disabled={admin.is_admin || userIsAdmin} />
                                         <GrantRevokeButton email={admin.email} button_type="revoke" disabled={!admin.is_admin || userIsAdmin} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <DeleteAdminBtn email={admin.email} disabled={userIsAdmin} />
                                     </TableCell>
                                 </TableRow>
                             )
