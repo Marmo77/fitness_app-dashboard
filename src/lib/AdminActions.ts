@@ -7,8 +7,8 @@ import { revalidatePath } from "next/cache";
 export type AdminInformation = {
     id: string;
     email: string;
-    given_by: string | null;
-    given_at: string | null;
+    granted_by: string | null;
+    granted_at: string | null;
     is_admin: boolean;
 }
 
@@ -39,7 +39,8 @@ export async function isUserAdmin(): Promise<boolean> {
 
 export async function AdminsList(): Promise<AdminInformation[] | null> {
     const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*").eq("is_admin", true);
+    const { data: admin } = await supabase.from("Admins").select("*");
+    // .eq("is_admin", true)
 
     if (admin) {
         return admin as AdminInformation[];
@@ -59,8 +60,9 @@ export async function RevokeAdmin(email: string) {
 
     if (admin) {
         await supabase.from("Admins").update({
-            is_admin: !admin.is_admin,
+            is_admin: false,
             revoked_by: revoked_by,
+            granted_by: "revoked"
         }).eq("email", email);
         //refresh zeby zobaczyc zmiane odrazu
         revalidatePath("/profil");
@@ -69,3 +71,29 @@ export async function RevokeAdmin(email: string) {
 
     return false;
 }
+
+
+// Grant admin status
+export async function GrantAdmin(email: string) {
+    const user = await getUserData();
+    const granted_by = user?.email || "unknown";
+
+    const supabase = await createClient();
+    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+
+    if (admin) {
+        await supabase.from("Admins").update({
+            is_admin: true,
+            granted_by: granted_by,
+            revoked_by: "granted",
+            granted_at: new Date().toISOString(),
+        }).eq("email", email);
+        //refresh zeby zobaczyc zmiane odrazu
+        revalidatePath("/profil");
+        return true;
+    }
+
+    return false;
+}
+
+// if user is admin, he cannot revoke admin status from himself
