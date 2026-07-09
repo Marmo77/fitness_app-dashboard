@@ -1,13 +1,13 @@
 import Navbar from "@/components/layout/Navbar";
-import { createClient } from "@/lib/supabase/server";
+import { getUserData } from "@/lib/getUser";
+import { User } from "@supabase/supabase-js";
 
 export default async function MainLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const user: User | null = await getUserData()
 
     return (
         <>
