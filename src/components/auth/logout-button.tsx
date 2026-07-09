@@ -5,7 +5,7 @@ import { LogOut } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export function LogoutButton() {
+export function LogoutButton({ short = false }: { short?: boolean }) {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
 
@@ -28,7 +28,9 @@ export function LogoutButton() {
                 size={15}
                 className="transition-transform duration-200 group-hover:translate-x-0.5"
             />
-            <span>{isPending ? "Wylogowywanie..." : "Wyloguj się"}</span>
+            {!short && (
+                <span>{isPending ? "Wylogowywanie..." : "Wyloguj się"}</span>
+            )}
         </button>
     )
 }

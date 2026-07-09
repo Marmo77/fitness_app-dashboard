@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/layout/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +40,13 @@ export default function RootLayout({
       )}
       suppressHydrationWarning
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <body className="min-h-full font-sans flex flex-col bg-background text-foreground">
+        <Navbar />
+        {/* flex-1 sprawia, że główny content wypełnia dostępną przestrzeń */}
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
