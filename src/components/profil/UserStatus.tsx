@@ -1,4 +1,4 @@
-import { isUserAdmin } from '@/lib/getUser';
+import { isUserAdmin } from '@/lib/AdminActions';
 import React from 'react'
 
 const UserStatus = async () => {

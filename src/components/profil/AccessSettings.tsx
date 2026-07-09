@@ -1,4 +1,4 @@
-import { AdminsList, isUserAdmin, AdminInformation } from '@/lib/getUser';
+import { AdminsList, isUserAdmin, AdminInformation, RevokeAdmin } from '@/lib/AdminActions';
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Button } from '../ui/button';
@@ -7,6 +7,17 @@ import { Crown, Trash } from 'lucide-react';
 const AccessSettings = async () => {
     const AdminList: AdminInformation[] | null = await AdminsList();
     const is_admin = await isUserAdmin();
+
+
+    // async function changeAdminStatus(email: string) {
+    //     await ChangeAdminStatus(email);
+    // }
+
+    async function deleteAdminStatus(email: string) {
+        await RevokeAdmin(email);
+    }
+
+
     return (
         is_admin ? (
             <section className='flex-1'>
@@ -18,9 +29,9 @@ const AccessSettings = async () => {
                     </div>
                 ))} */}
 
-                <Table className='max-h-[450px] border rounded-2xl'>
+                <Table className='max-h-[450px] border'>
                     <TableHeader className="border-b border-primary">
-                        <TableRow>
+                        <TableRow className='hover:bg-transparent'>
                             <TableHead>Email</TableHead>
                             <TableHead>Imię i nazwisko</TableHead>
                             <TableHead>Status</TableHead>
@@ -39,6 +50,7 @@ const AccessSettings = async () => {
                         </TableRow>
                     </TableBody>
                 </Table>
+                <Button onClick={() => deleteAdminStatus("test@test.com")}>Uzyskaj dostęp</Button>
             </section>) : (
             <section className='bg-amber-300 flex-1'>
                 <h2>Brak uprawnień do zarządzania dostępem</h2>
