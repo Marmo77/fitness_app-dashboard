@@ -29,6 +29,8 @@ const Navbar = ({ user }: NavbarProps) => {
     const avatarUrl = user?.user_metadata.avatar_url || null;
     const initial = displayName.charAt(0).toUpperCase();
 
+
+
     const isActive = (href: string) => pathname === href;
 
     const menuItems = [
@@ -95,7 +97,7 @@ const Navbar = ({ user }: NavbarProps) => {
 
                 {/* PRAWA STRONA: Profil i Hamburger */}
                 <div className="flex items-center gap-4">
-                    <div className="hidden md:flex items-center gap-3">
+                    <Link href="/profil" className="hidden md:flex items-center gap-3">
                         <span className="text-sm font-medium text-foreground">
                             {displayName}
                         </span>
@@ -105,7 +107,7 @@ const Navbar = ({ user }: NavbarProps) => {
                                 {initial}
                             </AvatarFallback>
                         </Avatar>
-                    </div>
+                    </Link>
 
                     {/* Hamburger Mobile */}
                     <Button
