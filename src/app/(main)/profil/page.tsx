@@ -40,7 +40,7 @@ const ProfilPage = async () => {
                 <UserStatus />
 
                 {/* Acess Settings */}
-                <section className='bg-amber-400 flex-1'>
+                <section className='flex-1 bg-card p-4'>
                     <AccessSettings />
                 </section>
             </div>
