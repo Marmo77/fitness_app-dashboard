@@ -3,24 +3,13 @@ import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-heading",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-heading" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "StrengthMap",
-  description: "Minimalist fitness dashboard for workouts, progress and strength tracking.",
+  title: "Nord Scan",
+  description: "Nord Scan - dashboard do edytowania/dodawania aut na sprzedaż.",
 };
 
 export default function RootLayout({
@@ -30,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pl"
       className={cn(
         "h-full antialiased",
         inter.variable,
@@ -39,7 +28,9 @@ export default function RootLayout({
       )}
       suppressHydrationWarning
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <body className="min-h-full font-sans flex flex-col bg-background text-foreground">
+        {children}
+      </body>
     </html>
   );
 }

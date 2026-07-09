@@ -20,8 +20,6 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         preview:
           "hover:bg-muted/90 hover:text-foreground",
-        logout:
-          "hover:bg-muted hover:text-foreground text-primary border border-muted rounded-2xl px-4"
       },
       size: {
         default:
