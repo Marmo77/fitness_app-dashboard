@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StrengthMap",
-  description: "Minimalist fitness dashboard for workouts, progress and strength tracking.",
+  title: "Nord Scan",
+  description: "Nord Scan - dashboard do edytowania/dodawania aut na sprzedaż.",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pl"
       className={cn(
         "h-full antialiased",
         inter.variable,

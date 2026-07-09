@@ -5,12 +5,13 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { loginWithEmail } from "@/app/(auth)/login/actions"
 import { useActionState, useState } from "react"
+import { dummyUser } from "@/lib/constants"
 
 export default function LoginForm() {
 
     const [state, formAction, isPending] = useActionState(loginWithEmail, null);
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState(dummyUser.username)
+    const [password, setPassword] = useState(dummyUser.password)
     const [showPassword, setShowPassword] = useState(false)
 
     return (
