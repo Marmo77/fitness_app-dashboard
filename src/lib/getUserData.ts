@@ -8,6 +8,8 @@ export async function getUserData() {
     return user;
 }
 
+// Get user profil from "profiles" table
+// This is the main function to get user profile from DB
 export type UserProfilType = {
     id: string;
     display_name: string;
@@ -17,10 +19,6 @@ export type UserProfilType = {
     created_at: string;
     is_admin: boolean;
 }
-
-
-// Get user profil from "profiles" table
-// This is the main function to get user profile from DB
 export async function getUserProfileDB(): Promise<UserProfilType | null> {
 
     const supabase = await createClient();
@@ -53,7 +51,7 @@ export async function getUserProfileDB(): Promise<UserProfilType | null> {
     const userProfile: UserProfilType = {
         id: data.id,
         email: data.email,
-        display_name: data.display_name,
+        display_name: data.display_name || "Użytkownik",
         avatar_url: data.avatar_url,
         provider: data.provider,
         created_at: data.created_at,
@@ -61,10 +59,8 @@ export async function getUserProfileDB(): Promise<UserProfilType | null> {
     }
     return userProfile;
 }
-
 //----------------------------------
 // Get user Statistics (/profil)
-
 export type UserStats = {
     status: string;
     createdAt: string;
@@ -107,15 +103,7 @@ export async function getUserStatistics(): Promise<UserStats | null> {
     return data;
 
 }
-
-
-
-
-
 //------------------------
-
-
-
 
 
 export type UserInformations = {
