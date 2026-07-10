@@ -82,8 +82,8 @@ export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
 
     return false;
 }
-// // Add user to Admins list by AdminButton.tsx
 
+//  !Now its not necessary because profiles is main table, not separate table "Admins" !
 // export async function AddUserToAdmins(email: string) {
 //     const user = await getUserData();
 //     const granted_by = user?.email || "unknown";
@@ -108,10 +108,7 @@ export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
 //     // if admin is in list, do nothing (prevent adding same admin twice)
 //     return false;
 // }
-
-
 // // Delete from Admins Panel (btn)
-
 // export async function DeleteAdmin(email: string) {
 //     const supabase = await createClient();
 //     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
@@ -124,4 +121,5 @@ export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
 //     }
 
 //     return false;
-// }
+
+const t = true;
