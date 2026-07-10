@@ -1,6 +1,7 @@
 import { LogoutButton } from '@/components/auth/logout-button'
 import AccessSettings from '@/components/profil/AccessSettings';
 import AddAdmin from '@/components/profil/AddAdmin';
+import EditProfilBtn from '@/components/profil/edit-profil-btn';
 import UserStatus from '@/components/profil/UserStatus';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,7 @@ const ProfilPage = async () => {
                             {initial}
                         </AvatarFallback>
                     </Avatar>
+                    {/* Nick + Email */}
                     <div className="flex flex-col gap-0.5">
                         <h1 className="font-semibold text-2xl tracking-tight text-foreground">
                             {displayName}
@@ -37,8 +39,9 @@ const ProfilPage = async () => {
                             {userProfile?.email}
                         </h2>
                     </div>
+                    {/* Edit button */}
+                    <EditProfilBtn />
                 </div>
-
                 <div className="w-full sm:w-auto flex justify-end">
                     <LogoutButton />
                 </div>
