@@ -61,11 +61,7 @@ export async function UsersList(filter: IUserFilter = { filter: "everyone" }): P
 export interface GrantRevokeOption {
     option: "grant" | "revoke";
 }
-
 export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
-    const user = await getUserProfileDB();
-    const admin_email = user?.email || "unknown";
-
     const supabase = await createClient();
     const { data: admin, error: adminError } = await supabase.from("profiles").select("*").eq("id", id).single();
 
