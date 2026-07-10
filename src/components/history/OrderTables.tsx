@@ -16,8 +16,8 @@ const OrderTable = () => {
 
     return (
         <div className="flex flex-col gap-4">
-            <Table className='max-h-[450px] border'>
-                <TableHeader className="border-b border-primary">
+            <Table className='max-h-[450px] border relative'>
+                <TableHeader className="border-b border-primary sticky z-50">
                     <TableRow className='hover:bg-transparent'>
                         <TableHead>ID</TableHead>
                         <TableHead>Usługa</TableHead>
