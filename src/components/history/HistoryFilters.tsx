@@ -18,12 +18,13 @@ type HistoryFiltersProps = {
     setSearchValue: (value: string) => void;
     sortValue: string;
     setSortValue: (value: string) => void;
-    filterOrder: string;
-    setFilterOrder: (value: string) => void;
+    filterOrder: "asc" | "desc";
+    setFilterOrder: (value: "asc" | "desc") => void;
+    handleApplyFilter: () => void;
 }
 
 
-const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, filterOrder, setFilterOrder }: HistoryFiltersProps) => {
+const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, filterOrder, setFilterOrder, handleApplyFilter }: HistoryFiltersProps) => {
 
 
     const handleOrderFilter = () => {
@@ -57,7 +58,7 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
             </div>
             {/* Control buttons */}
             <div className='flex-1 flex justify-end items-end gap-3'>
-                <Button variant="ghost" className='border-border hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+                <Button variant="ghost" onClick={handleApplyFilter} className='border-border hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
                     <FaMagnifyingGlass />
                 </Button>
                 <Button

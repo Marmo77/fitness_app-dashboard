@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
 
-const OrderTable = () => {
+const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: string, filterOrder: "asc" | "desc" }) => {
     //Get orders List
     const OrderList: OrderProps[] = orderMockup;
 
@@ -12,7 +12,38 @@ const OrderTable = () => {
     const handleCopyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
     }
+    // Filtrowanie & Sortowanie 
+    const FilteredAndSortedOrders = OrderList.filter((order) => {
+        const search = searchValue.toLowerCase();
 
+        // Dodano "return", aby filter wiedział, co ma zostawić w tablicy
+        return (
+            order.customerEmail.toLowerCase().includes(search) ||
+            order.customerName.toLowerCase().includes(search) ||
+            order.date.toLowerCase().includes(search) ||
+            order.id.toLowerCase().includes(search) ||
+            order.serviceName.toLowerCase().includes(search) ||
+            order.serviceType.toLowerCase().includes(search) ||
+            order.status.toLowerCase().includes(search) ||
+            // Zabezpieczenie dla opcjonalnego numeru telefonu (żeby aplikacja nie wyrzuciła błędu, gdy jest undefined)
+            (order.customerPhone && order.customerPhone.toLowerCase().includes(search))
+        );
+    }).sort((a, b) => {
+        // Pobieramy wartości na podstawie wybranego klucza do sortowania
+        // 'as keyof OrderProps' mówi TypeScriptowi, że sortValue na pewno jest jednym z kluczy Twojego typu
+        const valueA = a[sortValue as keyof OrderProps];
+        const valueB = b[sortValue as keyof OrderProps];
+
+        // Obsługa przypadków, gdy wartość jest undefined (np. brak telefonu lub active)
+        if (valueA === undefined) return filterOrder === "asc" ? 1 : -1;
+        if (valueB === undefined) return filterOrder === "asc" ? -1 : 1;
+
+        // Uniwersalne porównanie stringów (poradzi sobie z tekstami, ID, a nawet poprawnie sformatowaną datą ISO)
+        const comparison = String(valueA).localeCompare(String(valueB));
+
+        // Odwracamy wynik, jeśli użytkownik wybrał malejąco ("desc")
+        return filterOrder === "asc" ? comparison : comparison * -1;
+    });
 
     return (
         <div className="flex flex-col gap-4">
@@ -30,7 +61,7 @@ const OrderTable = () => {
                 </TableHeader>
                 <TableBody>
 
-                    {OrderList.map((order) => {
+                    {FilteredAndSortedOrders.map((order) => {
 
                         const formatedDate = order.date.split("-").reverse().join(".");
                         return (
