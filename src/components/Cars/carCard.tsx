@@ -18,7 +18,7 @@ const mockupData = {
     imageUrl: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?q=80&w=800&auto=format&fit=crop"
 };
 
-const CarCard = () => {
+const CarCard = ({ format = "side-by-side" }: { format?: "stack" | "side-by-side" }) => {
     // if user is admin show 3 btn else show 1 btn(details)
     const isAdmin = false;
 
@@ -29,9 +29,9 @@ const CarCard = () => {
     }).format(mockupData.price);
 
     return (
-        <Card className="flex p-0 flex-col sm:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-border group bg-card">
+        <Card className={format === "side-by-side" ? "flex p-0 flex-col sm:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-border group bg-card" : "flex p-0 flex-col overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-border group bg-card"}>
 
-            <div className="relative w-full sm:w-2/5 h-56 sm:h-auto shrink-0 overflow-hidden bg-muted">
+            <div className={format === "side-by-side" ? "relative w-full sm:w-2/5 h-56 sm:h-auto shrink-0 overflow-hidden bg-muted" : "relative w-full h-64 sm:h-72 shrink-0 overflow-hidden bg-muted"}>
                 <Image
                     src={mockupData.imageUrl}
                     alt={`${mockupData.make} ${mockupData.model}`}
@@ -47,7 +47,7 @@ const CarCard = () => {
 
             <div className="flex flex-col flex-1">
                 <CardContent className="p-5 pb-4 flex-1 flex flex-col justify-start">
-                    <div className="flex justify-between items-start gap-4 mb-4">
+                    <div className="flex xl:flex-row flex-col justify-between items-start gap-4 mb-4">
                         <div>
                             <h2 className="text-xl font-bold tracking-tight text-foreground line-clamp-1">
                                 {mockupData.make} {mockupData.model}
