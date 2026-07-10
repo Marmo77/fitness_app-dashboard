@@ -1,10 +1,16 @@
-import { UsersList, isUserAdmin, UserInfoI } from '@/lib/AdminActions';
+import { UsersList, isUserAdmin, UserInfoI, IUserFilter } from '@/lib/AdminActions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
 
-const AccessSettings = async ({ user_id }: { user_id: string | null }) => {
-    const AllUsersList: UserInfoI[] | null = await UsersList();
+
+
+
+
+
+
+const AccessSettings = async ({ user_id, filter_choice }: { user_id: string | null, filter_choice: IUserFilter }) => {
+    const AllUsersList: UserInfoI[] | null = await UsersList({ filter: filter_choice.filter });
     const is_admin = await isUserAdmin();
 
     // if user is admin, he cannot revoke admin status from himself
@@ -14,8 +20,6 @@ const AccessSettings = async ({ user_id }: { user_id: string | null }) => {
         }
         return false;
     }
-
-
 
     return (
         is_admin ? (

@@ -31,22 +31,22 @@ export interface UserInfoI {
     email: string;
     is_admin: boolean;
 }
-interface IUserFilter {
+export interface IUserFilter {
     filter: "user" | "admin" | "everyone";
 
 }
 export async function UsersList(filter: IUserFilter = { filter: "everyone" }): Promise<UserInfoI[] | null> {
     const supabase = await createClient();
-    const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin");
-
-
 
     if (filter.filter === "user") {
-        return users?.filter((user) => user.is_admin === false) || null;
+        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", false);
+        return users as UserInfoI[] || null;
     }
     if (filter.filter === "admin") {
-        return users?.filter((user) => user.is_admin === true) || null;
+        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", true);
+        return users as UserInfoI[] || null;
     }
+    const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin");
 
     if (users) {
         return users as UserInfoI[];
