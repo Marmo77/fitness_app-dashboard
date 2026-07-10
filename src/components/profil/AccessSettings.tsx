@@ -4,12 +4,12 @@ import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
 import DeleteAdminBtn from './delete-admin-btn';
 
-const AccessSettings = async ({ user_id }: { user_id: string }) => {
+const AccessSettings = async ({ user_id }: { user_id: string | null }) => {
     const AllUsersList: UserInfoI[] | null = await UsersList();
     const is_admin = await isUserAdmin();
 
     // if user is admin, he cannot revoke admin status from himself
-    const UserIsAdmin = (userID: string, adminID: string): boolean => {
+    const UserIsAdmin = (userID: string | null, adminID: string): boolean => {
         if (userID === adminID) {
             return true;
         }
@@ -38,7 +38,7 @@ const AccessSettings = async ({ user_id }: { user_id: string }) => {
                             return (
                                 <TableRow key={user.id} >
                                     <TableCell className={userIsAdmin ? 'text-primary font-mono' : ''}>{user.email}</TableCell>
-                                    <TableCell>{user.display_name}</TableCell>
+                                    <TableCell className={userIsAdmin ? 'underline decoration-2 underline-offset-2 decoration-primary/75' : ''}>{user.display_name}</TableCell>
                                     <TableCell className={`font-mono ${user.is_admin === true ? "text-primary" : "text-red-500"}`}>{user.is_admin ? "Admin" : "User"}</TableCell>
                                     <TableCell className='text-center flex gap-2 justify-center'>
                                         <GrantRevokeButton id={user.id} option={{ option: 'grant' }} disabled={user.is_admin || userIsAdmin} />

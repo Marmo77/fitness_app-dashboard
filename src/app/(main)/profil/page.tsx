@@ -1,6 +1,5 @@
 import { LogoutButton } from '@/components/auth/logout-button'
 import AccessSettings from '@/components/profil/AccessSettings';
-import AddAdmin from '@/components/profil/AddAdmin';
 import EditProfilBtn from '@/components/profil/edit-profil-btn';
 import ProfilesDBTest from '@/components/profil/profiles-db-test';
 import UserStatus from '@/components/profil/UserStatus';
@@ -13,6 +12,8 @@ import { getUserProfileDB, UserProfilType } from '@/lib/getUserData'
 
 const ProfilPage = async () => {
     const userProfil: UserProfilType | null = await getUserProfileDB();
+
+    const userId = userProfil?.id || null;
 
     const displayName = userProfil?.display_name || "Użytkownik"; // userProfil?.display_name || 
     const avatarUrl = userProfil?.avatar_url || null;
@@ -71,7 +72,7 @@ const ProfilPage = async () => {
 
                 <div className="p-0 sm:p-6 bg-background/50 overflow-x-auto rounded-b-2xl">
                     <div className="min-w-[600px] p-4 sm:p-0">
-                        {/* <AccessSettings user_email={userProfil?.email || ""} /> */}
+                        <AccessSettings user_id={userId} />
                     </div>
                 </div>
             </section>

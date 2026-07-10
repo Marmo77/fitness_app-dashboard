@@ -3,6 +3,7 @@ import React from 'react'
 import { Card } from '../ui/card';
 import { isUserAdmin, UsersList, UserInfoI } from '@/lib/AdminActions';
 import GrantRevokeButton from './grant-revoke-button';
+import AccessSettings from './AccessSettings';
 
 const ProfilesDBTest = async () => {
     const userProfil: UserProfilType | null = await getUserProfileDB();
