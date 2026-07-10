@@ -30,21 +30,25 @@ const OrderTable = () => {
                 </TableHeader>
                 <TableBody>
 
-                    {OrderList.map((order) => (
-                        <TableRow key={order.id} >
-                            <TableCell>{order.id}</TableCell>
-                            <TableCell>{order.serviceName}</TableCell>
-                            <TableCell>{order.serviceType}</TableCell>
-                            <TableCell>{order.customerName}</TableCell>
-                            <TableCell>{order.date}</TableCell>
-                            <TableCell className='flex justify-center items-center text-lg'>
-                                {order.status === "Zrobione" ? <MdDone className="text-green-500" /> :
-                                    order.status === "W toku" ? <MdOutlineHourglassEmpty className="text-yellow-500" /> :
-                                        <MdCancel className="text-red-500" />}
-                            </TableCell>
-                            <TableCell onClick={() => handleCopyToClipboard(order.customerEmail)} className='cursor-pointer underline-offset-2 hover:underline decoration-primary hover:text-primary text-xs text-left pr-4'>{order.customerEmail}</TableCell>
-                        </TableRow>
-                    ))}
+                    {OrderList.map((order) => {
+
+                        const formatedDate = order.date.split("-").reverse().join(".");
+                        return (
+                            <TableRow key={order.id} >
+                                <TableCell className='border-r'>{order.id}</TableCell>
+                                <TableCell className='border-r'>{order.serviceName}</TableCell>
+                                <TableCell className='border-r'>{order.serviceType}</TableCell>
+                                <TableCell className='border-r'>{order.customerName}</TableCell>
+                                <TableCell className='border-r'>{formatedDate}</TableCell>
+                                <TableCell className='flex justify-center items-center text-lg border-r'>
+                                    {order.status === "Zrobione" ? <MdDone className="text-green-500" /> :
+                                        order.status === "W toku" ? <MdOutlineHourglassEmpty className="text-yellow-500" /> :
+                                            <MdCancel className="text-red-500" />}
+                                </TableCell>
+                                <TableCell onClick={() => handleCopyToClipboard(order.customerEmail)} className='cursor-pointer underline-offset-2 hover:underline decoration-primary hover:text-primary text-left pr-4'>{order.customerEmail}</TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
