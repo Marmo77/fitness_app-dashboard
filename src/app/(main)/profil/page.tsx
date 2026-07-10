@@ -2,6 +2,7 @@ import { LogoutButton } from '@/components/auth/logout-button'
 import AccessSettings from '@/components/profil/AccessSettings';
 import AddAdmin from '@/components/profil/AddAdmin';
 import EditProfilBtn from '@/components/profil/edit-profil-btn';
+import ProfilesDBTest from '@/components/profil/profiles-db-test';
 import UserStatus from '@/components/profil/UserStatus';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -51,6 +52,9 @@ const ProfilPage = async () => {
             <section className="w-full">
                 <UserStatus />
             </section>
+            <div>
+                <ProfilesDBTest />
+            </div>
 
             {/* Ustawienia Dostępu */}
             <section className="w-full flex flex-col rounded-2xl bg-card border border-border shadow-sm">

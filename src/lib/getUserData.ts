@@ -8,6 +8,41 @@ export async function getUserData() {
     return user;
 }
 
+export type UserProfilType = {
+    id: string;
+    display_name: string;
+    email: string;
+    avatar_url: string;
+    provider: string;
+    created_at: string;
+    is_admin: boolean;
+}
+
+export async function getUserProfileDB(): Promise<UserProfilType | null> {
+
+    const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const user_email = user?.email || null;
+
+    const { data } = await supabase.from("profiles").select("*").eq("email", user_email).single() as { data: UserProfilType };
+
+
+    const userProfile: UserProfilType | null = {
+        id: data?.id || "",
+        email: user?.email || "",
+        display_name: user?.user_metadata.name || "",
+        avatar_url: user?.user_metadata.avatar_url || "",
+        provider: user?.app_metadata.provider || "",
+        created_at: user?.created_at || "",
+        is_admin: user?.user_metadata.is_admin || false,
+    }
+
+
+    return userProfile ?? null;
+}
+
+
 export type UserInformations = {
     id: string;
     displayName: string | null;
@@ -73,4 +108,11 @@ export async function getUserStatistics(): Promise<UserStatistics | null> {
 
     return data;
 
+}
+
+type UserEditData = {
+    id: string;
+    email: string;
+    displayName: string;
+    avatar_url: string;
 }
