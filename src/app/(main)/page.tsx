@@ -1,6 +1,4 @@
-import { LogoutButton } from "@/components/auth/logout-button"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+
 import CarCard from "@/components/Cars/carCard"
 
 const MainPage = () => {
