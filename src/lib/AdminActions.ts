@@ -1,34 +1,24 @@
 "use server";
-
+// Naprawnianie 10.07.2026
+// start: 13:04
 import { createClient } from "@/lib/supabase/server";
-import { getUserData } from "./getUserData";
 import { revalidatePath } from "next/cache";
-
-export type AdminInformation = {
-    id: string;
-    email: string;
-    granted_by: string | null;
-    revoked_by: string | null;
-    granted_at: string | null;
-    is_admin: boolean;
-}
+import { getUserProfileDB } from "./getUserData";
 
 
 // bool: check if user is admin (grant/not access to "Access settings")
 
 export async function isUserAdmin(): Promise<boolean> {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const userID = (await supabase.auth.getUser()).data.user?.id;
 
-    if (!user) {
+    if (!userID) {
         return false;
     }
-    const verifyEmail = user.email?.toLowerCase();
+    const { data: admin } = await supabase.from("profiles").select("id, is_admin").eq("id", userID).single();
+    console.log(admin)
 
-
-    const { data: admin } = await supabase.from("profiles").select("email, is_admin").eq("email", verifyEmail).single();
-
-    if (admin?.email === verifyEmail && admin?.is_admin === true) {
+    if (admin?.id === userID && admin?.is_admin === true) {
         return true;
     }
 
@@ -38,105 +28,105 @@ export async function isUserAdmin(): Promise<boolean> {
 
 // Get list of admins (even if is not admin anymore)
 
-export async function AdminsList(): Promise<AdminInformation[] | null> {
-    const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*");
-    // .eq("is_admin", true)
+// export async function AdminsList(): Promise<AdminInformation[] | null> {
+//     const supabase = await createClient();
+//     const { data: admin } = await supabase.from("Admins").select("*");
+//     // .eq("is_admin", true)
 
-    if (admin) {
-        return admin as AdminInformation[];
-    }
-    return null;
-}
-
-
-// Revoke admin status
-
-export async function RevokeAdmin(email: string) {
-    const user = await getUserData();
-    const revoked_by = user?.email || "unknown";
-
-    const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
-
-    if (admin) {
-        await supabase.from("Admins").update({
-            is_admin: false,
-            revoked_by: revoked_by,
-            granted_by: null,
-        }).eq("email", email);
-        //refresh zeby zobaczyc zmiane odrazu
-        revalidatePath("/profil");
-        return true;
-    }
-
-    return false;
-}
+//     if (admin) {
+//         return admin as AdminInformation[];
+//     }
+//     return null;
+// }
 
 
-// Grant admin status
-export async function GrantAdmin(email: string) {
-    const user = await getUserData();
-    const granted_by = user?.email || "unknown";
+// // Revoke admin status
 
-    const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+// export async function RevokeAdmin(email: string) {
+//     const user = await getUserProfileDB();
+//     const revoked_by = user?.email || "unknown";
 
-    if (admin) {
-        await supabase.from("Admins").update({
-            is_admin: true,
-            granted_by: granted_by,
-            revoked_by: null,
-            granted_at: new Date().toISOString(),
-        }).eq("email", email);
-        //refresh zeby zobaczyc zmiane odrazu
-        revalidatePath("/profil");
-        return true;
-    }
+//     const supabase = await createClient();
+//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
 
-    return false;
-}
+//     if (admin) {
+//         await supabase.from("Admins").update({
+//             is_admin: false,
+//             revoked_by: revoked_by,
+//             granted_by: null,
+//         }).eq("email", email);
+//         //refresh zeby zobaczyc zmiane odrazu
+//         revalidatePath("/profil");
+//         return true;
+//     }
 
-// Add user to Admins list by AdminButton.tsx
-
-export async function AddUserToAdmins(email: string) {
-    const user = await getUserData();
-    const granted_by = user?.email || "unknown";
-
-    const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
-
-    // if admin is not in list, add him
-    if (!admin) {
-        await supabase.from("Admins").insert({
-            email: email,
-            is_admin: true,
-            granted_by: granted_by,
-            revoked_by: null,
-            granted_at: new Date().toISOString(),
-        });
-        //refresh zeby zobaczyc zmiane odrazu
-        revalidatePath("/profil");
-        return true;
-    }
-
-    // if admin is in list, do nothing (prevent adding same admin twice)
-    return false;
-}
+//     return false;
+// }
 
 
-// Delete from Admins Panel (btn)
+// // Grant admin status
+// export async function GrantAdmin(email: string) {
+//     const user = await getUserData();
+//     const granted_by = user?.email || "unknown";
 
-export async function DeleteAdmin(email: string) {
-    const supabase = await createClient();
-    const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+//     const supabase = await createClient();
+//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
 
-    if (admin) {
-        await supabase.from("Admins").delete().eq("email", email);
-        //refresh zeby zobaczyc zmiane odrazu
-        revalidatePath("/profil");
-        return true;
-    }
+//     if (admin) {
+//         await supabase.from("Admins").update({
+//             is_admin: true,
+//             granted_by: granted_by,
+//             revoked_by: null,
+//             granted_at: new Date().toISOString(),
+//         }).eq("email", email);
+//         //refresh zeby zobaczyc zmiane odrazu
+//         revalidatePath("/profil");
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }
+
+// // Add user to Admins list by AdminButton.tsx
+
+// export async function AddUserToAdmins(email: string) {
+//     const user = await getUserData();
+//     const granted_by = user?.email || "unknown";
+
+//     const supabase = await createClient();
+//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+
+//     // if admin is not in list, add him
+//     if (!admin) {
+//         await supabase.from("Admins").insert({
+//             email: email,
+//             is_admin: true,
+//             granted_by: granted_by,
+//             revoked_by: null,
+//             granted_at: new Date().toISOString(),
+//         });
+//         //refresh zeby zobaczyc zmiane odrazu
+//         revalidatePath("/profil");
+//         return true;
+//     }
+
+//     // if admin is in list, do nothing (prevent adding same admin twice)
+//     return false;
+// }
+
+
+// // Delete from Admins Panel (btn)
+
+// export async function DeleteAdmin(email: string) {
+//     const supabase = await createClient();
+//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+
+//     if (admin) {
+//         await supabase.from("Admins").delete().eq("email", email);
+//         //refresh zeby zobaczyc zmiane odrazu
+//         revalidatePath("/profil");
+//         return true;
+//     }
+
+//     return false;
+// }
