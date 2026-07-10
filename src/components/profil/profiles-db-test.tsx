@@ -2,6 +2,7 @@ import { getUserProfileDB, UserProfilType } from '@/lib/getUserData';
 import React from 'react'
 import { Card } from '../ui/card';
 import { isUserAdmin, UsersList, UserInfoI } from '@/lib/AdminActions';
+import GrantRevokeButton from './grant-revoke-button';
 
 const ProfilesDBTest = async () => {
     const userProfil: UserProfilType | null = await getUserProfileDB();
@@ -30,6 +31,10 @@ const ProfilesDBTest = async () => {
                         </li>
                     ))}
                 </ul>
+                <div className='flex gap-2'>
+                    <GrantRevokeButton id='23' option={{ option: 'grant' }} disabled={false} />
+                    <GrantRevokeButton id='23' option={{ option: 'revoke' }} disabled={false} />
+                </div>
             </Card>
         </div>
     )

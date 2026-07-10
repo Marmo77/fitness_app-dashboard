@@ -7,7 +7,6 @@ import { getUserProfileDB } from "./getUserData";
 
 
 // bool: check if user is admin (grant/not access to "Access settings")
-
 export async function isUserAdmin(): Promise<boolean> {
     const supabase = await createClient();
     const userID = (await supabase.auth.getUser()).data.user?.id;
@@ -24,17 +23,14 @@ export async function isUserAdmin(): Promise<boolean> {
 
     return false;
 }
-
-
+//-------------------------
 // Get list of users(with filters: user/admin/everyone) (even if is not admin anymore)
-
 export interface UserInfoI {
     id: string;
     display_name: string;
     email: string;
     is_admin: boolean;
 }
-
 interface IUserFilter {
     filter: "user" | "admin" | "everyone";
 
@@ -59,55 +55,37 @@ export async function UsersList(filter: IUserFilter = { filter: "everyone" }): P
     }
     return null;
 }
+//---------------------------
+// Grant/Revoke admin status (option: "grant" | "revoke", is_admin: false/true)
 
+export interface GrantRevokeOption {
+    option: "grant" | "revoke";
+}
 
-// // Revoke admin status
+export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
+    const user = await getUserProfileDB();
+    const admin_email = user?.email || "unknown";
 
-// export async function RevokeAdmin(email: string) {
-//     const user = await getUserProfileDB();
-//     const revoked_by = user?.email || "unknown";
+    const supabase = await createClient();
+    const { data: admin, error: adminError } = await supabase.from("profiles").select("*").eq("id", id).single();
 
-//     const supabase = await createClient();
-//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
+    if (adminError) {
+        console.error("Error fetching admin:", adminError.message);
+        return false;
+    }
 
-//     if (admin) {
-//         await supabase.from("Admins").update({
-//             is_admin: false,
-//             revoked_by: revoked_by,
-//             granted_by: null,
-//         }).eq("email", email);
-//         //refresh zeby zobaczyc zmiane odrazu
-//         revalidatePath("/profil");
-//         return true;
-//     }
+    // jeśli znaleziono admina w bazie (to przyznaj/zabierz -> zależnie od opcjiFunkcji)
+    if (admin) {
+        await supabase.from("profiles").update({
+            is_admin: option.option === "grant" ? true : false
+        }).eq("id", id);
+        //refresh zeby zobaczyc zmiane odrazu
+        revalidatePath("/profil");
+        return true;
+    }
 
-//     return false;
-// }
-
-
-// // Grant admin status
-// export async function GrantAdmin(email: string) {
-//     const user = await getUserData();
-//     const granted_by = user?.email || "unknown";
-
-//     const supabase = await createClient();
-//     const { data: admin } = await supabase.from("Admins").select("*").eq("email", email).single();
-
-//     if (admin) {
-//         await supabase.from("Admins").update({
-//             is_admin: true,
-//             granted_by: granted_by,
-//             revoked_by: null,
-//             granted_at: new Date().toISOString(),
-//         }).eq("email", email);
-//         //refresh zeby zobaczyc zmiane odrazu
-//         revalidatePath("/profil");
-//         return true;
-//     }
-
-//     return false;
-// }
-
+    return false;
+}
 // // Add user to Admins list by AdminButton.tsx
 
 // export async function AddUserToAdmins(email: string) {
