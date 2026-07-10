@@ -18,6 +18,9 @@ export type UserProfilType = {
     is_admin: boolean;
 }
 
+
+// Get user profil from "profiles" table
+// This is the main function to get user profile from DB
 export async function getUserProfileDB(): Promise<UserProfilType | null> {
 
     const supabase = await createClient();
@@ -59,6 +62,61 @@ export async function getUserProfileDB(): Promise<UserProfilType | null> {
     return userProfile;
 }
 
+//----------------------------------
+// Get user Statistics (/profil)
+
+export type UserStats = {
+    status: string;
+    createdAt: string;
+    provider: string;
+    carsAdded: number;
+}
+export async function getUserStatistics(): Promise<UserStats | null> {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return null;
+    }
+
+    const { count: carsAdded, error } = await supabase
+        .from("cars")
+        .select("*", { count: "exact", head: true })
+        .eq("added_by", user.id);
+
+    if (error) {
+        console.error("Error counting cars:", error)
+    }
+    const createdAtDate = new Date(user.created_at);
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+    const is_admin = profile?.is_admin || false;
+
+    const data: UserStats = {
+        status: is_admin ? "Admin" : "User",
+        createdAt: createdAtDate.toLocaleDateString(),
+        provider: user.app_metadata.provider || "unknown",
+        carsAdded: carsAdded || 0,
+    }
+
+    return data;
+
+}
+
+
+
+
+
+//------------------------
+
+
+
+
 
 export type UserInformations = {
     id: string;
@@ -88,48 +146,3 @@ export async function getUserProfile(): Promise<UserInformations | null> {
 
 }
 
-
-// Get user Statistics
-
-export type UserStatistics = {
-    createdAt: string;
-    provider: string;
-    carsAdded: number;
-    lastActive: string;
-}
-export async function getUserStatistics(): Promise<UserStatistics | null> {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-        return null;
-    }
-
-    const { count: carsAdded, error } = await supabase
-        .from("cars")
-        .select("*", { count: "exact", head: true })
-        .eq("added_by", user.email);
-
-    if (error) {
-        console.log(error)
-    }
-    const createdAtDate = new Date(user.created_at);
-    const lastActiveDate = user.last_sign_in_at ? new Date(user.last_sign_in_at) : createdAtDate;
-
-    const data: UserStatistics = {
-        createdAt: createdAtDate.toLocaleDateString(),
-        provider: user.app_metadata.provider || "unknown",
-        carsAdded: carsAdded || 0,
-        lastActive: lastActiveDate.toLocaleDateString(),
-    }
-
-    return data;
-
-}
-
-type UserEditData = {
-    id: string;
-    email: string;
-    displayName: string;
-    avatar_url: string;
-}
