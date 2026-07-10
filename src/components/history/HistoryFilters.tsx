@@ -1,7 +1,7 @@
 import { Card } from '../ui/card'
 import { Input } from '../ui/input'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
-import { X } from 'lucide-react'
+import { ArrowDown, ArrowUp, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import {
     Select,
@@ -11,22 +11,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { cancelFiltering, SortOptions } from './actions'
 
 type HistoryFiltersProps = {
     searchValue: string;
     setSearchValue: (value: string) => void;
     sortValue: string;
     setSortValue: (value: string) => void;
+    filterOrder: string;
+    setFilterOrder: (value: string) => void;
 }
 
-const SortOptions: { value: string, label: string }[] = [
-    { value: "id", label: "ID" },
-    { value: "date", label: "Data" },
-    { value: "serviceType", label: "Typ usługi" },
-    { value: "status", label: "Status" }
-]
 
-const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue }: HistoryFiltersProps) => {
+const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, filterOrder, setFilterOrder }: HistoryFiltersProps) => {
+
+
+    const handleOrderFilter = () => {
+        setFilterOrder(filterOrder === "asc" ? "desc" : "asc");
+    }
+
     return (
         <Card className="w-fit p-4 flex flex-row items-center gap-4 relative">
             <div className='relative max-w-[300px]'>
@@ -36,7 +39,6 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue }
                 <p>Sortuj: </p>
                 <Select value={sortValue} items={SortOptions} onValueChange={(value) => setSortValue(value as string)}>
                     <SelectTrigger className="w-[150px]">
-                        {/* W tym miejscu jest błąd. Nie ma komponentu SelectValue w bibliotece Shadcn UI. */}
                         <SelectValue placeholder={sortValue || "Wybierz..."} />
                     </SelectTrigger>
                     <SelectContent>
@@ -49,11 +51,19 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue }
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <Button onClick={handleOrderFilter} className={"cursor-pointer"}>
+                    {filterOrder === "asc" ? <ArrowUp /> : <ArrowDown />}
+                </Button>
             </div>
             {/* Control buttons */}
-            <div>
-
-                <Button variant="ghost" className='ml-auto border-border'>
+            <div className='flex-1 flex justify-end items-end gap-3'>
+                <Button variant="ghost" className='border-border hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+                    <FaMagnifyingGlass />
+                </Button>
+                <Button
+                    onClick={() => cancelFiltering(setSearchValue, setSortValue, setFilterOrder)}
+                    variant="ghost"
+                    className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 transition-all cursor-pointer'>
                     <X />
                 </Button>
             </div>
