@@ -1,3 +1,6 @@
+"use server"
+
+import { revalidatePath } from "next/cache";
 import { createClient } from "./supabase/server";
 
 
@@ -98,4 +101,30 @@ export async function getUserStatistics(): Promise<UserStats | null> {
 
 }
 //------------------------
+// User update own profile (edit profil)
 
+export async function updateDisplayName(newName: string): Promise<boolean> {
+
+    const supabase = await createClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        throw new Error("Brak autoryzacji");
+    }
+
+    const { error } = await supabase
+        .from("profiles")
+        .update({ display_name: newName })
+        .eq("id", user.id);
+
+    if (error) {
+        console.error("Error updating display name:", error);
+        return false;
+    }
+
+    revalidatePath('/profil');
+    return true;
+
+}

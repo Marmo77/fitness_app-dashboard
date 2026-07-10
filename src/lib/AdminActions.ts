@@ -39,14 +39,14 @@ export async function UsersList(filter: IUserFilter = { filter: "everyone" }): P
     const supabase = await createClient();
 
     if (filter.filter === "user") {
-        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", false);
+        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", false).limit(8);
         return users as UserInfoI[] || null;
     }
     if (filter.filter === "admin") {
-        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", true);
+        const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").eq("is_admin", true).limit(8);
         return users as UserInfoI[] || null;
     }
-    const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin");
+    const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin").limit(8);
 
     if (users) {
         return users as UserInfoI[];
@@ -120,4 +120,4 @@ export async function GrantRevokeAdmin(id: string, option: GrantRevokeOption) {
 
 //     return false;
 
-const t = true;
+
