@@ -64,7 +64,6 @@ const ProfilPage = async () => {
                         <p className="text-sm text-muted-foreground mt-1">Zarządzaj swoimi uprawnieniami i rolami w systemie.</p>
                     </div>
                     <div className='self-center mr-6'>
-                        {/* <AddAdmin /> */}
                     </div>
                 </div>
 

@@ -1,9 +1,9 @@
 "use server";
 // Naprawnianie 10.07.2026
 // start: 13:04
+// end:   13:38
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-import { getUserProfileDB } from "./getUserData";
 
 
 // bool: check if user is admin (grant/not access to "Access settings")
@@ -15,7 +15,7 @@ export async function isUserAdmin(): Promise<boolean> {
         return false;
     }
     const { data: admin } = await supabase.from("profiles").select("id, is_admin").eq("id", userID).single();
-    console.log(admin)
+    // console.log(admin)
 
     if (admin?.id === userID && admin?.is_admin === true) {
         return true;
@@ -39,9 +39,7 @@ export async function UsersList(filter: IUserFilter = { filter: "everyone" }): P
     const supabase = await createClient();
     const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin");
 
-    if (users) {
-        console.log(users)
-    }
+
 
     if (filter.filter === "user") {
         return users?.filter((user) => user.is_admin === false) || null;

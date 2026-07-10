@@ -2,7 +2,6 @@ import { UsersList, isUserAdmin, UserInfoI } from '@/lib/AdminActions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
-import DeleteAdminBtn from './delete-admin-btn';
 
 const AccessSettings = async ({ user_id }: { user_id: string | null }) => {
     const AllUsersList: UserInfoI[] | null = await UsersList();
