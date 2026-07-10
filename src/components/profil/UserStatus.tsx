@@ -1,24 +1,24 @@
-import { CalendarDays, CarFront, Fingerprint, Activity } from "lucide-react";
+import { CalendarDays, CarFront, Fingerprint, Activity, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { getUserStatistics, type UserStatistics } from "@/lib/getUserData";
+import { getUserStatistics, type UserStats } from "@/lib/getUserData";
 
 export default async function UserStatus() {
     // Te dane ostatecznie pobierzesz z Supabase (np. await supabase.auth.getUser() i zapytania do tabel)
-    const userStatistics: UserStatistics | null = await getUserStatistics();
+    const userStatistics: UserStats | null = await getUserStatistics();
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
 
-            {/* Karta 1: Z nami od */}
-            <Card className="bg-card border-border shadow-sm">
+            {/* Karta 1: Status */}
+            <Card className={`bg-card shadow-sm ${userStatistics?.status === "Admin" ? "ring-2 ring-red-400/50" : "border-border"}`}>
                 <CardContent className="p-6 flex flex-row items-center gap-4">
                     <div className="p-3 bg-primary/10 rounded-xl">
-                        <CalendarDays className="h-5 w-5 text-primary" />
+                        <User className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-sm font-medium text-muted-foreground">Z nami od</p>
-                        <p className="text-lg font-semibold text-foreground tracking-tight">
-                            {userStatistics?.createdAt}
+                        <p className="text-sm font-medium text-muted-foreground">Status</p>
+                        <p className={`${userStatistics?.status === "Admin" ? "text-primary" : "text-red-500"} text-lg font-semibold text-foreground tracking-tight capitalize`}>
+                            {userStatistics?.status}
                         </p>
                     </div>
                 </CardContent>
@@ -58,12 +58,12 @@ export default async function UserStatus() {
             <Card className="bg-card border-border shadow-sm">
                 <CardContent className="p-6 flex flex-row items-center gap-4">
                     <div className="p-3 bg-primary/10 rounded-xl">
-                        <Activity className="h-5 w-5 text-primary" />
+                        <CalendarDays className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-sm font-medium text-muted-foreground">Ostatnia Aktywność</p>
+                        <p className="text-sm font-medium text-muted-foreground">Zarejestrowany:</p>
                         <p className="text-lg font-semibold text-foreground tracking-tight">
-                            {userStatistics?.lastActive}
+                            {userStatistics?.createdAt}
                         </p>
                     </div>
                 </CardContent>

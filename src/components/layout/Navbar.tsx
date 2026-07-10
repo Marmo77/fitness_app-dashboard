@@ -11,9 +11,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { usePathname } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
+import { UserProfilType } from "@/lib/getUserData";
 
 interface NavbarProps {
-    user: User | null;
+    user: UserProfilType | null;
 }
 
 const Navbar = ({ user }: NavbarProps) => {
@@ -25,9 +26,6 @@ const Navbar = ({ user }: NavbarProps) => {
 
     const toggleMenu = () => setIsMobileOpen(!isMobileOpen);
 
-    const displayName = user?.user_metadata.name || user?.email?.split("@")[0] || "Użytkownik";
-    const avatarUrl = user?.user_metadata.avatar_url || null;
-    const initial = displayName.charAt(0).toUpperCase();
 
 
 
@@ -99,12 +97,12 @@ const Navbar = ({ user }: NavbarProps) => {
                 <div className="flex items-center gap-4">
                     <Link href="/profil" className="hidden md:flex items-center gap-3">
                         <span className="text-sm font-medium text-foreground">
-                            {displayName}
+                            {user?.display_name}
                         </span>
                         <Avatar className="h-8 w-8 border border-border" >
-                            <AvatarImage src={avatarUrl} alt={displayName} />
+                            <AvatarImage src={user?.avatar_url || undefined} alt={user?.display_name || "Użytkownik"} />
                             <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                {initial}
+                                {user?.display_name?.charAt(0).toUpperCase() || "U"}
                             </AvatarFallback>
                         </Avatar>
                     </Link>

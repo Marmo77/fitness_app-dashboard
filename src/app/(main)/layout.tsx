@@ -1,13 +1,13 @@
 import Navbar from "@/components/layout/Navbar";
-import { getUserData } from "@/lib/getUserData";
-import { User } from "@supabase/supabase-js";
+import { getUserProfileDB, UserProfilType } from "@/lib/getUserData";
+
 
 export default async function MainLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const user: User | null = await getUserData()
+    const user: UserProfilType | null = await getUserProfileDB()
 
     return (
         <>

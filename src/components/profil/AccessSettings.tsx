@@ -1,22 +1,25 @@
-import { AdminsList, isUserAdmin, AdminInformation } from '@/lib/AdminActions';
+import { UsersList, isUserAdmin, UserInfoI, IUserFilter } from '@/lib/AdminActions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
-import DeleteAdminBtn from './delete-admin-btn';
 
-const AccessSettings = async ({ user_email }: { user_email: string }) => {
-    const AdminList: AdminInformation[] | null = await AdminsList();
+
+
+
+
+
+
+const AccessSettings = async ({ user_id, filter_choice }: { user_id: string | null, filter_choice: IUserFilter }) => {
+    const AllUsersList: UserInfoI[] | null = await UsersList({ filter: filter_choice.filter });
     const is_admin = await isUserAdmin();
 
     // if user is admin, he cannot revoke admin status from himself
-    const UserIsAdmin = (userEmail: string, adminEmail: string): boolean => {
-        if (userEmail === adminEmail) {
+    const UserIsAdmin = (userID: string | null, adminID: string): boolean => {
+        if (userID === adminID) {
             return true;
         }
         return false;
     }
-
-
 
     return (
         is_admin ? (
@@ -27,28 +30,22 @@ const AccessSettings = async ({ user_email }: { user_email: string }) => {
                             <TableHead>Email</TableHead>
                             <TableHead>Imię i nazwisko</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Nadany/Zabrany przez</TableHead>
                             <TableHead>Akcje</TableHead>
-                            <TableHead>Usuń</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {AdminList?.map((admin) => {
-                            const userIsAdmin = UserIsAdmin(user_email, admin.email);
+                        {AllUsersList?.map((user) => {
+                            const userIsAdmin = UserIsAdmin(user_id, user.id);
 
 
                             return (
-                                <TableRow key={admin.id} >
-                                    <TableCell className={userIsAdmin ? 'text-primary font-mono' : ''}>{admin.email}</TableCell>
-                                    <TableCell>{admin.email.split("@")[0]}</TableCell>
-                                    <TableCell className={`font-mono ${admin.is_admin === true ? "text-primary" : "text-red-500"}`}>{admin.is_admin ? "Admin" : "User"}</TableCell>
-                                    <TableCell className='text-xs text-muted-foreground'>{admin.granted_by ? admin.granted_by : admin.revoked_by}</TableCell>
+                                <TableRow key={user.id} >
+                                    <TableCell className={userIsAdmin ? 'text-primary font-mono' : ''}>{user.email}</TableCell>
+                                    <TableCell className={userIsAdmin ? 'underline decoration-2 underline-offset-2 decoration-primary/75' : ''}>{user.display_name}</TableCell>
+                                    <TableCell className={`font-mono ${user.is_admin === true ? "text-primary" : "text-red-500"}`}>{user.is_admin ? "Admin" : "User"}</TableCell>
                                     <TableCell className='text-center flex gap-2 justify-center'>
-                                        <GrantRevokeButton email={admin.email} button_type="grant" disabled={admin.is_admin || userIsAdmin} />
-                                        <GrantRevokeButton email={admin.email} button_type="revoke" disabled={!admin.is_admin || userIsAdmin} />
-                                    </TableCell>
-                                    <TableCell>
-                                        <DeleteAdminBtn email={admin.email} disabled={userIsAdmin} />
+                                        <GrantRevokeButton id={user.id} option={{ option: 'grant' }} disabled={user.is_admin || userIsAdmin} />
+                                        <GrantRevokeButton id={user.id} option={{ option: 'revoke' }} disabled={!user.is_admin || userIsAdmin} />
                                     </TableCell>
                                 </TableRow>
                             )
