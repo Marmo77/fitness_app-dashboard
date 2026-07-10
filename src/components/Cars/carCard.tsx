@@ -1,3 +1,8 @@
+// FOR NOW:
+// This website will be for a mechanic/services so instead of adding cars to list we will add
+// services that the mechanic offers.
+
+
 import React from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
