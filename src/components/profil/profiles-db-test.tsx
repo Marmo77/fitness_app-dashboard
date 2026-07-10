@@ -1,15 +1,23 @@
 import { getUserProfileDB, UserProfilType } from '@/lib/getUserData';
 import React from 'react'
+import { Card } from '../ui/card';
 
 const ProfilesDBTest = async () => {
-    const userProfileDB: UserProfilType | null = await getUserProfileDB();
+    const userProfil: UserProfilType | null = await getUserProfileDB();
     return (
-        <div>
-            <p>Test {userProfileDB?.display_name}</p>
-            <p>Email {userProfileDB?.email}</p>
-            <p>Avatar {userProfileDB?.avatar_url}</p>
-            <p>Created {userProfileDB?.created_at}</p>
-            <p>ID {userProfileDB?.id}</p>
+        <div className="grid grid-cols-2 gap-4">
+            <Card className='border p-4'>
+                <p>Display Name: {userProfil?.display_name}</p>
+                <p>Email: {userProfil?.email}</p>
+                <p>Avatar: {userProfil?.avatar_url}</p>
+                <p>Created At: {userProfil?.created_at}</p>
+                <p>ID: {userProfil?.id}</p>
+                <p>Provider: {userProfil?.provider}</p>
+            </Card>
+            <Card className="border p-4">
+                <p className='text-bold text-'>ADMIN TEST</p>
+                <p>admin: {userProfil?.is_admin.toString()}</p>
+            </Card>
         </div>
     )
 }

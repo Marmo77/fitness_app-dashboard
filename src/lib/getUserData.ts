@@ -22,24 +22,41 @@ export async function getUserProfileDB(): Promise<UserProfilType | null> {
 
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
-    const user_email = user?.email || null;
+    const {
+        data: { user },
+        error: userError,
+    } = await supabase.auth.getUser();
 
-    const { data } = await supabase.from("profiles").select("*").eq("email", user_email).single() as { data: UserProfilType };
-
-
-    const userProfile: UserProfilType | null = {
-        id: data?.id || "",
-        email: user?.email || "",
-        display_name: user?.user_metadata.name || "",
-        avatar_url: user?.user_metadata.avatar_url || "",
-        provider: user?.app_metadata.provider || "",
-        created_at: user?.created_at || "",
-        is_admin: user?.user_metadata.is_admin || false,
+    if (userError || !user) {
+        console.error("Error:", userError);
+        return null;
     }
 
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
 
-    return userProfile ?? null;
+    if (error) {
+        console.error("DB error:", error);
+        return null;
+    }
+    if (!data) {
+        console.error("No data from DB query");
+        return null;
+    }
+
+    const userProfile: UserProfilType = {
+        id: data.id,
+        email: data.email,
+        display_name: data.display_name,
+        avatar_url: data.avatar_url,
+        provider: data.provider,
+        created_at: data.created_at,
+        is_admin: data.is_admin,
+    }
+    return userProfile;
 }
 
 

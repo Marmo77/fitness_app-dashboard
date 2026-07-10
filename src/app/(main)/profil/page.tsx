@@ -5,20 +5,18 @@ import EditProfilBtn from '@/components/profil/edit-profil-btn';
 import ProfilesDBTest from '@/components/profil/profiles-db-test';
 import UserStatus from '@/components/profil/UserStatus';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { getUserProfile } from '@/lib/getUserData'
-import { UserPlus } from 'lucide-react';
+import { getUserProfileDB, UserProfilType } from '@/lib/getUserData'
 
 
 
 
 const ProfilPage = async () => {
-    const userProfile = await getUserProfile();
+    const userProfil: UserProfilType | null = await getUserProfileDB();
 
-    const displayName = userProfile?.displayName || userProfile?.email?.split("@")[0] || "Użytkownik";
-    const avatarUrl = userProfile?.avatar_url || null;
-    const initial = displayName.charAt(0).toUpperCase();
+    const displayName = userProfil?.display_name || "Użytkownik"; // userProfil?.display_name || 
+    const avatarUrl = userProfil?.avatar_url || null;
+    const initial = displayName?.charAt(0).toUpperCase();
     return (
         <main className="flex-1 container max-w-7xl mx-auto py-8 px-4 md:py-12 lg:px-8 flex flex-col gap-8">
 
@@ -37,7 +35,7 @@ const ProfilPage = async () => {
                             {displayName}
                         </h1>
                         <h2 className="text-sm text-muted-foreground">
-                            {userProfile?.email}
+                            {userProfil?.email}
                         </h2>
                     </div>
                     {/* Edit button */}
@@ -73,7 +71,7 @@ const ProfilPage = async () => {
 
                 <div className="p-0 sm:p-6 bg-background/50 overflow-x-auto rounded-b-2xl">
                     <div className="min-w-[600px] p-4 sm:p-0">
-                        <AccessSettings user_email={userProfile?.email || ""} />
+                        <AccessSettings user_email={userProfil?.email || ""} />
                     </div>
                 </div>
             </section>
