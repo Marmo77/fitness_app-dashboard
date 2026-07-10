@@ -30,7 +30,7 @@ export async function proxy(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     const isProtectedRoute =
-        request.nextUrl.pathname.startsWith("/dashboard") ||
+        request.nextUrl.pathname.startsWith("/") ||
         request.nextUrl.pathname.startsWith("/profile") ||
         request.nextUrl.pathname.startsWith("/settings")
 

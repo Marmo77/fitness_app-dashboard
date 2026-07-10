@@ -7,8 +7,7 @@ export type OrderProps = {
     customerPhone?: string;
     date: string;
     status: "Zrobione" | "W toku" | "Anulowane";
-
-    active: boolean;
+    active?: boolean;
 }
 
 export const orderMockup: OrderProps[] = [
