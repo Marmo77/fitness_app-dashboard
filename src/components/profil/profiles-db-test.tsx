@@ -1,11 +1,14 @@
 import { getUserProfileDB, UserProfilType } from '@/lib/getUserData';
 import React from 'react'
 import { Card } from '../ui/card';
-import { isUserAdmin } from '@/lib/AdminActions';
+import { isUserAdmin, UsersList, UserInfoI } from '@/lib/AdminActions';
 
 const ProfilesDBTest = async () => {
     const userProfil: UserProfilType | null = await getUserProfileDB();
     const isAdmin: boolean = await isUserAdmin();
+
+    const ListOfUsers: UserInfoI[] | null = await UsersList({ filter: "everyone" });
+
     return (
         <div className="grid grid-cols-2 gap-4">
             <Card className='border p-4'>
@@ -19,6 +22,14 @@ const ProfilesDBTest = async () => {
             <Card className="border p-4">
                 <p className='text-bold text-'>ADMIN TEST</p>
                 <p>admin: {isAdmin ? "jest" : "nie jest"}</p>
+                <p>Lista użytkowników:</p>
+                <ul>
+                    {ListOfUsers?.map((user) => (
+                        <li key={user.id}>
+                            {user.display_name} - {user.email} - {user.is_admin ? "Admin" : "User"}
+                        </li>
+                    ))}
+                </ul>
             </Card>
         </div>
     )

@@ -26,18 +26,39 @@ export async function isUserAdmin(): Promise<boolean> {
 }
 
 
-// Get list of admins (even if is not admin anymore)
+// Get list of users(with filters: user/admin/everyone) (even if is not admin anymore)
 
-// export async function AdminsList(): Promise<AdminInformation[] | null> {
-//     const supabase = await createClient();
-//     const { data: admin } = await supabase.from("Admins").select("*");
-//     // .eq("is_admin", true)
+export interface UserInfoI {
+    id: string;
+    display_name: string;
+    email: string;
+    is_admin: boolean;
+}
 
-//     if (admin) {
-//         return admin as AdminInformation[];
-//     }
-//     return null;
-// }
+interface IUserFilter {
+    filter: "user" | "admin" | "everyone";
+
+}
+export async function UsersList(filter: IUserFilter = { filter: "everyone" }): Promise<UserInfoI[] | null> {
+    const supabase = await createClient();
+    const { data: users } = await supabase.from("profiles").select("id, display_name, email, is_admin");
+
+    if (users) {
+        console.log(users)
+    }
+
+    if (filter.filter === "user") {
+        return users?.filter((user) => user.is_admin === false) || null;
+    }
+    if (filter.filter === "admin") {
+        return users?.filter((user) => user.is_admin === true) || null;
+    }
+
+    if (users) {
+        return users as UserInfoI[];
+    }
+    return null;
+}
 
 
 // // Revoke admin status
