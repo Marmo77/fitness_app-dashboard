@@ -32,14 +32,14 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
     }
 
     return (
-        <Card className="w-fit p-4 flex flex-row items-center gap-4 relative">
+        <Card className="p-4 flex lg:flex-row items-start lg:items-center gap-4 relative">
             <div className='relative max-w-[300px]'>
                 <Input placeholder="Szukaj..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
             </div>
             <div className='flex flex-row items-center gap-2'>
-                <p>Sortuj: </p>
+                <p className='font-semibold'>Sortuj: </p>
                 <Select value={sortValue} items={SortOptions} onValueChange={(value) => setSortValue(value as string)}>
-                    <SelectTrigger className="w-[150px]">
+                    <SelectTrigger className="w-[140px] cursor-pointer">
                         <SelectValue placeholder={sortValue || "Wybierz..."} />
                     </SelectTrigger>
                     <SelectContent>
@@ -57,14 +57,14 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
                 </Button>
             </div>
             {/* Control buttons */}
-            <div className='flex-1 flex justify-end items-end gap-3'>
-                <Button variant="ghost" onClick={handleApplyFilter} className='border-border hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+            <div className='flex-1 flex gap-3'>
+                <Button variant="ghost" onClick={handleApplyFilter} className='border-border w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
                     <FaMagnifyingGlass />
                 </Button>
                 <Button
                     onClick={() => cancelFiltering(setSearchValue, setSortValue, setFilterOrder)}
                     variant="ghost"
-                    className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 transition-all cursor-pointer'>
+                    className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 w-full lg:w-auto transition-all cursor-pointer'>
                     <X />
                 </Button>
             </div>

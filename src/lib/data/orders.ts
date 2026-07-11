@@ -1,5 +1,16 @@
-import { TableHead, TableRow } from "../ui/table";
+// Orders Data
+// Table Headers for orders
+export const OrdersHeaderSchema = {
+    id: "ID",
+    serviceName: "Usługa",
+    serviceType: "Kategoria",
+    customerName: "Klient",
+    date: "Data",
+    status: "Status",
+    customerEmail: "Kontakt z klientem",
+}
 
+// OrderProps type
 export type OrderProps = {
     id: number;
     serviceName: string;
@@ -12,6 +23,7 @@ export type OrderProps = {
     active?: boolean;
 }
 
+// Mockup orders data - to replace with real data from API
 export const orderMockup: OrderProps[] = [
     {
         id: 1,
@@ -180,13 +192,3 @@ export const orderMockup: OrderProps[] = [
     },
 ]
 
-
-export const OrdersHeaderSchema = {
-    id: "ID",
-    serviceName: "Usługa",
-    serviceType: "Kategoria",
-    customerName: "Klient",
-    date: "Data",
-    status: "Status",
-    customerEmail: "Kontakt z klientem",
-}

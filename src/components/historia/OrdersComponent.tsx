@@ -3,7 +3,7 @@
 import HistoryFilters from './HistoryFilters'
 import OrderTable from './OrderTables'
 import React, { useState } from 'react'
-import { type OrderProps } from './orders'
+import { type OrderProps } from '../../lib/data/orders'
 
 export default function OrdersComponent() {
 

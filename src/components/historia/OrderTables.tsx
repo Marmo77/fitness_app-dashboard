@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
 import { FilterAndSortOrders } from '../../app/(main)/historia/actions';
-import { OrdersHeaderSchema, type OrderProps } from './orders';
+import { OrdersHeaderSchema, type OrderProps } from '../../lib/data/orders';
 
 const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: keyof OrderProps, filterOrder: "asc" | "desc" }) => {
     //copy to clipboard
@@ -29,7 +29,7 @@ const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: stri
 
                         const formatedDate = order.date.split("-").reverse().join(".");
                         return (
-                            <TableRow key={order.id} >
+                            <TableRow key={order.id} className={`${!order.active && "opacity-50"}`} >
                                 <TableCell className='border-r'>{order.id}</TableCell>
                                 <TableCell className='border-r'>{order.serviceName}</TableCell>
                                 <TableCell className='border-r'>{order.serviceType}</TableCell>
