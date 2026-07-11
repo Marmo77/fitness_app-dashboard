@@ -23,7 +23,7 @@ const AccessSettings = async ({ user_id, filter_choice }: { user_id: string | nu
 
     return (
         is_admin ? (
-            <section className='flex-1'>
+            <section className='flex-1' id="access">
                 <Table className='max-h-[450px] border'>
                     <TableHeader className="border-b border-primary">
                         <TableRow className='hover:bg-transparent'>

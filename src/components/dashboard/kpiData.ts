@@ -8,7 +8,6 @@ export type KpiCardProps = {
     description: string;
     style: KpiCardStyle;
 }
-
 export type KpiCardStyle = "financial" | "active" | "new" | "performance";
 
 

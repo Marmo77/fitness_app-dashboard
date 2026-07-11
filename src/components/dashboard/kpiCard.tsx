@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { KpiCardProps } from "./kpiData";
@@ -19,7 +18,7 @@ export const KpiCard = ({
             (style === "new" && "border-b-3 border-b-purple-500 shadow-purple-500/50"),
             (style === "performance" && "border-b-3 border-b-orange-500 shadow-orange-500/50")
         )}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardHeader className="flex flex-row items-center justify-between pb-3 space-y-0">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                     {title}
                 </CardTitle>
@@ -27,7 +26,7 @@ export const KpiCard = ({
                     "p-2 rounded-lg",
                     style === "financial" ? "bg-emerald-500/10 text-emerald-500" : "bg-primary/10 text-primary"
                 )}>
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-6 w-6" />
                 </div>
             </CardHeader>
             <CardContent>
