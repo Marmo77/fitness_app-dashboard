@@ -26,9 +26,10 @@ export default function OrdersComponent() {
 
     return (
         <div className='flex gap-2 flex-col'>
-            <div className='space-y-1'>
-                <h3 className='text-[15px] text-muted-foreground font-medium pl-2'>Filtruj:</h3>
-                <HistoryFilters searchValue={searchValue} setSearchValue={setSearchValue} sortValue={sortValue as string} setSortValue={setSortValue as unknown as (value: string) => void} filterOrder={filterOrder} setFilterOrder={setFilterOrder} handleApplyFilter={handleApplyFilters} />
+            <div className='space-y-1 w-full '>
+                <div className='flex items-center justify-center w-full'>
+                    <HistoryFilters searchValue={searchValue} setSearchValue={setSearchValue} sortValue={sortValue as string} setSortValue={setSortValue as unknown as (value: string) => void} filterOrder={filterOrder} setFilterOrder={setFilterOrder} handleApplyFilter={handleApplyFilters} />
+                </div>
             </div>
             <OrderTable searchValue={appliedSearch} sortValue={appliedSort as keyof OrderProps} filterOrder={appliedOrder} />
         </div>

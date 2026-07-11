@@ -24,7 +24,10 @@ export const KpiCard = ({
                 </CardTitle>
                 <div className={cn(
                     "p-2 rounded-lg",
-                    style === "financial" ? "bg-emerald-500/10 text-emerald-500" : "bg-primary/10 text-primary"
+                    (style === "financial" && "bg-emerald-500/10 text-emerald-500"),
+                    (style === "active" && "bg-blue-500/10 text-blue-500"),
+                    (style === "new" && "bg-purple-500/10 text-purple-500"),
+                    (style === "performance" && "bg-orange-500/10 text-orange-500")
                 )}>
                     <Icon className="h-6 w-6" />
                 </div>

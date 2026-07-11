@@ -33,7 +33,8 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
 
     return (
         <Card className="p-4 flex lg:flex-row items-start lg:items-center gap-4 relative">
-            <div className='relative max-w-[300px]'>
+            <h3 className='text-[15px] lg:text-left self-center text-muted-foreground font-semibold pl-2'>Filtruj:</h3>
+            <div className='relative max-w-[300px] w-full'>
                 <Input placeholder="Szukaj..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
             </div>
             <div className='flex flex-row items-center gap-2'>
@@ -57,8 +58,8 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
                 </Button>
             </div>
             {/* Control buttons */}
-            <div className='flex-1 flex gap-3'>
-                <Button variant="ghost" onClick={handleApplyFilter} className='border-border w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+            <div className='grid grid-cols-2 lg:flex  w-full lg:w-auto gap-3'>
+                <Button variant="ghost" onClick={handleApplyFilter} className='border-border  w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
                     <FaMagnifyingGlass />
                 </Button>
                 <Button
