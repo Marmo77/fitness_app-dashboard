@@ -4,12 +4,10 @@ import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
 import { FilterAndSortOrders } from '../../app/(main)/historia/actions';
 import { OrdersHeaderSchema, type OrderProps } from '../../lib/data/orders';
+import { handleCopyToClipboard } from '@/lib/functions';
 
 const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: keyof OrderProps, filterOrder: "asc" | "desc" }) => {
     //copy to clipboard
-    const handleCopyToClipboard = (text: string) => {
-        navigator.clipboard.writeText(text);
-    }
     // Filtrowanie & Sortowanie 
     const FilteredAndSortedOrders = FilterAndSortOrders(searchValue, sortValue, filterOrder)
 

@@ -3,33 +3,32 @@
 import AdminsList from "@/components/dashboard/AdminsList";
 import DashboardCards from "@/components/dashboard/DashboardCards";
 import NewestOrders from "@/components/dashboard/NewestOrders";
-import { company } from "@/lib/constants";
+import DashboardNavigation from "@/components/dashboard/DasboardNavigation";
 
 const MainPage = () => {
 
-    const [companyFront, companyBack] = company.name.split(" ");
     return (
-        <main className="relative flex flex-col gap-4 flex-1 container mx-auto items-center p-6 py-18">
-            <div className="flex flex-col w-full">
-                <div className="flex gap-1 items-baseline text-4xl">
-                    <h2 className="font-ight">Dashboard</h2>
-                    <span className="text-muted-foreground">-</span>
-                    <div className="flex gap-2 font-bold tracking-tight shrink-0">
-                        <span className="text-primary">{companyFront}</span>
-                        {companyBack && <span className="text-foreground"> {companyBack}</span>}
-                    </div>
-                </div>
-            </div>
+        <main className="relative flex flex-col gap-4 flex-1 container mx-auto items-center p-6 py-8">
+            <DashboardNavigation />
             <section className="w-full flex flex-col items-start justify-start gap-4">
                 {/* Dashboard with KPI Cards (4 boxes) */}
-                <section className="w-full">
-                    <DashboardCards />
+                <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <DashboardCards />
+                    </div>
+                    <div>
+                        Huge Chart
+                    </div>
                 </section>
-                <section className="w-full grid grid-cols-2 gap-4">
+                <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {/* history orders - Recent (newest 8 orders) */}
-                    <NewestOrders />
+                    <div className="lg:col-span-2">
+                        <NewestOrders /> {/*  66% of width */}
+                    </div>
                     {/* Administrators List */}
-                    <AdminsList />
+                    <div className="lg:col-span-1">
+                        <AdminsList /> {/*  33% of width */}
+                    </div>
                 </section>
             </section>
 

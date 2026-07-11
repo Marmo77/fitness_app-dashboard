@@ -2,23 +2,18 @@
 
 import { orderMockup } from "@/lib/data/orders";
 
-// 1. Newest 10 orders
+// 1. Newest 8 orders
 
 
 
-const Last10Orders = () => {
+export const GetLastOrders = () => {
 
     orderMockup.sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime()
     })
-    const SlicedOrders = orderMockup.slice(0, 10)
+    const SlicedOrders = orderMockup.slice(0, 8)
 
     return SlicedOrders
-}
-
-export const Test = () => {
-
-    console.log(Last10Orders)
 }
 
 

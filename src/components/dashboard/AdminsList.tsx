@@ -12,7 +12,7 @@ const adminList = [
 
 const AdminsList = () => {
     return (
-        <Card>
+        <Card className='h-full'>
             <CardHeader className='flex justify-between px-6'>
                 <CardTitle className='text-primary text-xl font-extrabold'>Administratorzy</CardTitle>
                 <Link href="/profil#access">
