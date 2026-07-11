@@ -2,7 +2,7 @@
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
-import { FilterAndSortOrders } from './actions';
+import { FilterAndSortOrders } from '../../app/(main)/historia/actions';
 import { type OrderProps } from './orders';
 
 const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: keyof OrderProps, filterOrder: "asc" | "desc" }) => {

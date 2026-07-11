@@ -1,4 +1,4 @@
-import { orderMockup, type OrderProps } from "./orders";
+import { orderMockup, type OrderProps } from "../../../components/historia/orders";
 
 // Sort Options
 export const SortOptions: { value: keyof OrderProps, label: string }[] = [

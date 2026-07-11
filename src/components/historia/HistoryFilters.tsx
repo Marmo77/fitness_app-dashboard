@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { cancelFiltering, SortOptions } from './actions'
+import { cancelFiltering, SortOptions } from '../../app/(main)/historia/actions'
 
 type HistoryFiltersProps = {
     searchValue: string;

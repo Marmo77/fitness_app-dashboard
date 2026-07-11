@@ -1,4 +1,4 @@
-import OrdersComponent from "@/components/history/OrdersComponent"
+import OrdersComponent from "@/components/historia/OrdersComponent"
 
 
 const page = () => {
