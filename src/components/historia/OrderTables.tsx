@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
 import { FilterAndSortOrders } from '../../app/(main)/historia/actions';
-import { type OrderProps } from './orders';
+import { OrdersHeaderSchema, type OrderProps } from './orders';
 
 const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: keyof OrderProps, filterOrder: "asc" | "desc" }) => {
     //copy to clipboard
@@ -18,13 +18,9 @@ const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: stri
             <Table className='max-h-[450px] border relative'>
                 <TableHeader className="border-b border-primary sticky z-50">
                     <TableRow className='hover:bg-transparent'>
-                        <TableHead>ID</TableHead>
-                        <TableHead>Usługa</TableHead>
-                        <TableHead>Kategoria</TableHead>
-                        <TableHead>Klient</TableHead>
-                        <TableHead>Data</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Kontakt z klientem</TableHead>
+                        {Object.values(OrdersHeaderSchema).map((header) => (
+                            <TableHead key={header}>{header}</TableHead>
+                        ))}
                     </TableRow>
                 </TableHeader>
                 <TableBody>

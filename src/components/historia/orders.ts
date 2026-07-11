@@ -1,3 +1,5 @@
+import { TableHead, TableRow } from "../ui/table";
+
 export type OrderProps = {
     id: number;
     serviceName: string;
@@ -177,3 +179,14 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
 ]
+
+
+export const OrdersHeaderSchema = {
+    id: "ID",
+    serviceName: "Usługa",
+    serviceType: "Kategoria",
+    customerName: "Klient",
+    date: "Data",
+    status: "Status",
+    customerEmail: "Kontakt z klientem",
+}
