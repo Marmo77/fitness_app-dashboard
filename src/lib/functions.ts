@@ -11,3 +11,11 @@ export const CurrentTime = async () => {
         second: "2-digit",
     })
 }
+
+
+export const UserIsAdmin = (userID: string | null, adminID: string): boolean => {
+    if (userID === adminID) {
+        return true;
+    }
+    return false;
+}

@@ -20,7 +20,7 @@ const MainPage = () => {
                         Huge Chart
                     </div>
                 </section>
-                <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-2">
                     {/* history orders - Recent (newest 8 orders) */}
                     <div className="lg:col-span-2">
                         <NewestOrders /> {/*  66% of width */}

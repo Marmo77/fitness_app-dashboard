@@ -1,11 +1,6 @@
-// async functions for Dashboard
-
 import { orderMockup } from "@/lib/data/orders";
 
 // 1. Newest 8 orders
-
-
-
 export const GetLastOrders = () => {
 
     orderMockup.sort((a, b) => {
@@ -15,10 +10,6 @@ export const GetLastOrders = () => {
 
     return SlicedOrders
 }
-
-
-
-// 2. Administrator list
 
 
 
