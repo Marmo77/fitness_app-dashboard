@@ -2,6 +2,7 @@
 
 import AdminsList from "@/components/dashboard/AdminsList";
 import DashboardCards from "@/components/dashboard/DashboardCards";
+import NewestOrders from "@/components/dashboard/NewestOrders";
 import { company } from "@/lib/constants";
 
 const MainPage = () => {
@@ -20,11 +21,14 @@ const MainPage = () => {
                 </div>
             </div>
             <section className="w-full flex flex-col items-start justify-start gap-4">
+                {/* Dashboard with KPI Cards (4 boxes) */}
                 <section className="w-full">
                     <DashboardCards />
                 </section>
-                <section className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* history orders */}
+                <section className="w-full grid grid-cols-2 gap-4">
+                    {/* history orders - Recent (newest 8 orders) */}
+                    <NewestOrders />
+                    {/* Administrators List */}
                     <AdminsList />
                 </section>
             </section>
