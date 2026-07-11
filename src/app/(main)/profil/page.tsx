@@ -33,8 +33,8 @@ const ProfilPage = async ({ searchParams }: ProfilPageProps) => {
         <main className="flex-1 container max-w-7xl mx-auto py-8 px-4 md:py-12 lg:px-8 flex flex-col gap-8">
 
             {/* Karta użytkownika */}
-            <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 rounded-2xl bg-card border border-border shadow-sm">
-                <div className="flex items-center gap-5">
+            <section className="flex flex-col lg:flex-row sm:items-center justify-between gap-6 p-6 rounded-2xl bg-card border border-border shadow-sm">
+                <div className="flex items-center justify-center gap-5">
                     <Avatar className="h-16 w-16 border-2 border-background shadow-sm ring-1 ring-border">
                         <AvatarImage src={avatarUrl || ""} alt={displayName || ""} />
                         <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
@@ -53,7 +53,7 @@ const ProfilPage = async ({ searchParams }: ProfilPageProps) => {
                     {/* Edit button */}
                     <EditProfilBtn />
                 </div>
-                <div className="w-full sm:w-auto flex justify-end">
+                <div className="w-auto flex justify-center items-center">
                     <LogoutButton />
                 </div>
             </section>
