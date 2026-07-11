@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { cancelFiltering, SortOptions } from '../../app/(main)/historia/actions'
+import { SortOptions } from '@/app/(main)/historia/actions'
 
 type HistoryFiltersProps = {
     searchValue: string;
@@ -21,11 +21,15 @@ type HistoryFiltersProps = {
     filterOrder: "asc" | "desc";
     setFilterOrder: (value: "asc" | "desc") => void;
     handleApplyFilter: () => void;
+    handleResetFilters: () => void; // <--- Nowa funkcja do czyszczenia
 }
 
-
-const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, filterOrder, setFilterOrder, handleApplyFilter }: HistoryFiltersProps) => {
-
+const HistoryFilters = ({
+    searchValue, setSearchValue,
+    sortValue, setSortValue,
+    filterOrder, setFilterOrder,
+    handleApplyFilter, handleResetFilters
+}: HistoryFiltersProps) => {
 
     const handleOrderFilter = () => {
         setFilterOrder(filterOrder === "asc" ? "desc" : "asc");
@@ -39,9 +43,9 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
             </div>
             <div className='flex flex-row items-center gap-2'>
                 <p className='font-semibold'>Sortuj: </p>
-                <Select value={sortValue} items={SortOptions} onValueChange={(value) => setSortValue(value as string)}>
+                <Select value={sortValue} items={SortOptions} onValueChange={(val) => setSortValue(val || "date")}>
                     <SelectTrigger className="w-[140px] cursor-pointer">
-                        <SelectValue placeholder={sortValue || "Wybierz..."} />
+                        <SelectValue placeholder="Wybierz..." />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
@@ -53,25 +57,21 @@ const HistoryFilters = ({ searchValue, setSearchValue, sortValue, setSortValue, 
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <Button onClick={handleOrderFilter} className={"cursor-pointer"}>
+                <Button onClick={handleOrderFilter} className="cursor-pointer">
                     {filterOrder === "asc" ? <ArrowUp /> : <ArrowDown />}
                 </Button>
             </div>
-            {/* Control buttons */}
-            <div className='grid grid-cols-2 lg:flex  w-full lg:w-auto gap-3'>
-                <Button variant="ghost" onClick={handleApplyFilter} className='border-border  w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+
+            <div className='grid grid-cols-2 lg:flex w-full lg:w-auto gap-3'>
+                <Button onClick={handleApplyFilter} variant="ghost" className='border-border w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
                     <FaMagnifyingGlass />
                 </Button>
-                <Button
-                    onClick={() => cancelFiltering(setSearchValue, setSortValue, setFilterOrder)}
-                    variant="ghost"
-                    className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 w-full lg:w-auto transition-all cursor-pointer'>
+                <Button onClick={handleResetFilters} variant="ghost" className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 w-full lg:w-auto transition-all cursor-pointer'>
                     <X />
                 </Button>
             </div>
-
         </Card>
     )
 }
 
-export default HistoryFilters
+export default HistoryFilters;

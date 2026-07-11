@@ -23,7 +23,7 @@ const MainPage = () => {
                 <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-2">
                     {/* history orders - Recent (newest 8 orders) */}
                     <div className="lg:col-span-2">
-                        <NewestOrders /> {/*  66% of width */}
+                        {/* <NewestOrders />  66% of width */}
                     </div>
                     {/* Administrators List */}
                     <div className="lg:col-span-1">

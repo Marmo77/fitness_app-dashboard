@@ -1,4 +1,5 @@
-import { Activity, Car, CircleDollarSign, Users } from "lucide-react";
+import { Activity, CircleDollarSign, Users } from "lucide-react";
+import { MdTaskAlt } from "react-icons/md";
 
 // Data for KPI Cards
 export type KpiCardProps = {
@@ -20,9 +21,9 @@ export const kpiCardsData: KpiCardProps[] = [
         style: "financial"
     },
     {
-        title: "Aktywne ogłoszenia",
+        title: "Zakończone Zlecenia",
         value: "42",
-        Icon: Car,
+        Icon: MdTaskAlt,
         description: "3 nowe w tym tygodniu",
         style: "active"
     },
