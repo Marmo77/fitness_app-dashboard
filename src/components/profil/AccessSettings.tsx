@@ -2,6 +2,7 @@ import { UsersList, isUserAdmin, UserInfoI, IUserFilter } from '@/lib/AdminActio
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import GrantRevokeButton from './grant-revoke-button';
 import { ShieldAlert } from 'lucide-react';
+import { UserIsAdmin } from '@/lib/functions';
 
 
 
@@ -14,16 +15,10 @@ const AccessSettings = async ({ user_id, filter_choice }: { user_id: string | nu
     const is_admin = await isUserAdmin();
 
     // if user is admin, he cannot revoke admin status from himself
-    const UserIsAdmin = (userID: string | null, adminID: string): boolean => {
-        if (userID === adminID) {
-            return true;
-        }
-        return false;
-    }
 
     return (
         is_admin ? (
-            <section className='flex-1'>
+            <section className='flex-1' id="access">
                 <Table className='max-h-[450px] border'>
                     <TableHeader className="border-b border-primary">
                         <TableRow className='hover:bg-transparent'>

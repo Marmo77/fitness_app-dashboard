@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { usePathname } from "next/navigation";
-import type { User } from "@supabase/supabase-js";
 import { UserProfilType } from "@/lib/getUserData";
 
 interface NavbarProps {
@@ -21,6 +20,9 @@ const Navbar = ({ user }: NavbarProps) => {
     const pathname = usePathname();
     const [companyFront, companyBack] = company.name.split(" ");
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+    // if user is on "/profil" -> Change nick color to primary
+    const onProfil = pathname === "/profil" ? "text-primary" : "text-foreground";
 
     if (pathname === "/login") return null;
 
@@ -96,7 +98,7 @@ const Navbar = ({ user }: NavbarProps) => {
                 {/* PRAWA STRONA: Profil i Hamburger */}
                 <div className="flex items-center gap-4">
                     <Link href="/profil" className="hidden md:flex items-center gap-3">
-                        <span className="text-sm font-medium text-foreground">
+                        <span className={`text-sm font-semibold ${onProfil}`}>
                             {user?.display_name}
                         </span>
                         <Avatar className="h-8 w-8 border border-border" >

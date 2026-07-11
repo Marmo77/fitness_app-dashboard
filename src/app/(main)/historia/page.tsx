@@ -1,18 +1,13 @@
-import OrdersComponent from "@/components/history/OrdersComponent"
+// src/app/(main)/historia/page.tsx
+import OrdersComponent from "@/components/historia/OrdersComponent";
+import { getOrdersFromDB } from "@/lib/data/orders";
 
+export default async function HistoryPage() {
+    const initialOrders = await getOrdersFromDB();
 
-const page = () => {
     return (
-        <main className="relative flex flex-col gap-4 flex-1 container mx-auto items-center p-6">
-            <div className='flex gap-12 w-full'>
-                <div className="flex flex-col flex-1 w-full">
-                    <h2 className="text-2xl font-semibold">Ostatnie zlecenia</h2>
-                    <span className="text-primary text-xs mb-4">Serwis samochodowy</span>
-                    <OrdersComponent />
-                </div>
-            </div>
+        <main className="container mx-auto py-8">
+            <OrdersComponent initialOrders={initialOrders} />
         </main>
-    )
+    );
 }
-
-export default page
