@@ -1,5 +1,5 @@
 export type OrderProps = {
-    id: string;
+    id: number;
     serviceName: string;
     serviceType: string;
     customerName: string;
@@ -12,7 +12,7 @@ export type OrderProps = {
 
 export const orderMockup: OrderProps[] = [
     {
-        id: "1",
+        id: 1,
         serviceName: "Diagnostyka komputerowa",
         serviceType: "Diagnostyka",
         customerName: "Jan Kowalski",
@@ -23,7 +23,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "2",
+        id: 2,
         serviceName: "Wymiana oleju i filtrów",
         serviceType: "Serwis okresowy",
         customerName: "Adam Nowak",
@@ -34,7 +34,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "3",
+        id: 3,
         serviceName: "Wymiana klocków hamulcowych",
         serviceType: "Układ hamulcowy",
         customerName: "Piotr Wiśniewski",
@@ -45,7 +45,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "4",
+        id: 4,
         serviceName: "Geometria kół",
         serviceType: "Zawieszenie",
         customerName: "Michał Zieliński",
@@ -56,7 +56,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "5",
+        id: 5,
         serviceName: "Wymiana rozrządu",
         serviceType: "Silnik",
         customerName: "Krzysztof Wójcik",
@@ -67,7 +67,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "6",
+        id: 6,
         serviceName: "Wymiana sprzęgła",
         serviceType: "Układ napędowy",
         customerName: "Tomasz Kamiński",
@@ -78,7 +78,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "7",
+        id: 7,
         serviceName: "Naprawa klimatyzacji",
         serviceType: "Klimatyzacja",
         customerName: "Paweł Lewandowski",
@@ -89,7 +89,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "8",
+        id: 8,
         serviceName: "Wymiana amortyzatorów",
         serviceType: "Zawieszenie",
         customerName: "Marcin Dąbrowski",
@@ -100,7 +100,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "9",
+        id: 9,
         serviceName: "Wymiana akumulatora",
         serviceType: "Elektryka",
         customerName: "Mateusz Szymański",
@@ -111,7 +111,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "10",
+        id: 10,
         serviceName: "Regeneracja alternatora",
         serviceType: "Elektryka",
         customerName: "Łukasz Woźniak",
@@ -122,7 +122,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "11",
+        id: 11,
         serviceName: "Wymiana świec zapłonowych",
         serviceType: "Silnik",
         customerName: "Daniel Kozłowski",
@@ -133,7 +133,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "12",
+        id: 12,
         serviceName: "Czyszczenie DPF",
         serviceType: "Układ wydechowy",
         customerName: "Sebastian Jankowski",
@@ -144,7 +144,7 @@ export const orderMockup: OrderProps[] = [
         active: true,
     },
     {
-        id: "13",
+        id: 13,
         serviceName: "Wymiana opon",
         serviceType: "Ogumienie",
         customerName: "Rafał Mazur",
@@ -155,7 +155,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "14",
+        id: 14,
         serviceName: "Naprawa układu wydechowego",
         serviceType: "Układ wydechowy",
         customerName: "Karol Krawczyk",
@@ -166,7 +166,7 @@ export const orderMockup: OrderProps[] = [
         active: false,
     },
     {
-        id: "15",
+        id: 15,
         serviceName: "Wymiana chłodnicy",
         serviceType: "Układ chłodzenia",
         customerName: "Grzegorz Piątek",

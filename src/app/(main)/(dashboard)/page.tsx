@@ -1,6 +1,5 @@
 // "/" is a dashboard
 
-import OrderTable from "@/components/history/OrderTables";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -11,7 +10,7 @@ const MainPage = () => {
         <main className="relative flex flex-col gap-4 flex-1 container mx-auto items-center p-6">
             <div className="flex flex-col w-full">
                 <Button>
-                    <Link href="/history">Historia</Link>
+                    <Link href="/historia">Historia</Link>
                 </Button>
             </div>
         </main>

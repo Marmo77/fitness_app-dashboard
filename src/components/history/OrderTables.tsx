@@ -1,13 +1,11 @@
 "use client"
-import { orderMockup, type OrderProps } from './orders'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Button } from '../ui/button';
 import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md"
 import { FilterAndSortOrders } from './actions';
+import { type OrderProps } from './orders';
 
-const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: string, filterOrder: "asc" | "desc" }) => {
-    //Get orders List
-
+const OrderTable = ({ searchValue, sortValue, filterOrder }: { searchValue: string, sortValue: keyof OrderProps, filterOrder: "asc" | "desc" }) => {
     //copy to clipboard
     const handleCopyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
