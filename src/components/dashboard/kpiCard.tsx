@@ -3,12 +3,8 @@ import { cn } from "@/lib/utils";
 import { KpiCardProps } from "./kpiData";
 
 export const KpiCard = ({
-    title,
-    value,
-    Icon,
-    description,
-    style
-}: KpiCardProps) => {
+    cards
+}: { cards: KpiCardProps[] }) => {
 
     return (
         <Card className={cn(
