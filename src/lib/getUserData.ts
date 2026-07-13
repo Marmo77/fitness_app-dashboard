@@ -128,3 +128,37 @@ export async function updateDisplayName(newName: string): Promise<boolean> {
     return true;
 
 }
+
+
+// get stats for Navigation 
+export type UserPillType = {
+    waiting: number;
+    totalUsers: number;
+    moneyFromWaitingOrders: number;
+}
+
+export const getPillInformations = async () => {
+    const supabase = await createClient();
+
+
+    const waiting = await supabase
+        .from("orders")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "W toku");
+
+    const totalUsers = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true });
+
+    const moneyFromWaitingOrders = await supabase
+        .from("orders")
+        .select("price")
+        .eq("status", "W toku")
+
+    return {
+        waiting: waiting.count || 0,
+        totalUsers: totalUsers.count || 0,
+        moneyFromWaitingOrders: moneyFromWaitingOrders.data?.reduce((sum, current) => sum + current.price, 0) || 0,
+    }
+
+}

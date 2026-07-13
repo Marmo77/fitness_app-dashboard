@@ -2,21 +2,22 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Plus, HelpCircle, Search } from "lucide-react";
+import { Menu, X, Plus, HelpCircle, HourglassIcon, Contact2Icon, DollarSignIcon } from "lucide-react";
 import { company, dummyUser } from "@/lib/constants";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { usePathname } from "next/navigation";
-import { UserProfilType } from "@/lib/getUserData";
+import { UserPillType, UserProfilType } from "@/lib/getUserData";
+import QuickActions from "../navigation/quickActions";
 
 interface NavbarProps {
     user: UserProfilType | null;
+    pillInfos: UserPillType | null;
 }
 
-const Navbar = ({ user }: NavbarProps) => {
+const Navbar = ({ user, pillInfos }: NavbarProps) => {
     const pathname = usePathname();
     const [companyFront, companyBack] = company.name.split(" ");
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -27,10 +28,6 @@ const Navbar = ({ user }: NavbarProps) => {
     if (pathname === "/login") return null;
 
     const toggleMenu = () => setIsMobileOpen(!isMobileOpen);
-
-
-
-
     const isActive = (href: string) => pathname === href;
 
     const menuItems = [
@@ -48,10 +45,37 @@ const Navbar = ({ user }: NavbarProps) => {
         },
     ];
 
+    const PillItems = [
+        {
+            alt: "Oczekujące zamówienia",
+            value: pillInfos?.waiting,
+            icon: HourglassIcon,
+            color: "text-primary",
+            bgColor: "hover:bg-primary/10",
+            href: "/historia",
+        },
+        {
+            alt: "",
+            value: pillInfos?.totalUsers,
+            icon: Contact2Icon,
+            color: "text-blue-500",
+            bgColor: "hover:bg-blue-50",
+            href: "/profil",
+        },
+        {
+            alt: "",
+            value: pillInfos?.moneyFromWaitingOrders,
+            icon: DollarSignIcon,
+            color: "text-green-500",
+            bgColor: "hover:bg-green-50",
+            href: "/historia",
+        }
+    ]
+
 
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
 
                 {/* LEWA STRONA: Logo, Wyszukiwarka, Akcje */}
@@ -63,20 +87,12 @@ const Navbar = ({ user }: NavbarProps) => {
 
                     {/* Desktop Wyszukiwarka i Przyciski */}
                     <div className="hidden md:flex items-center gap-2 max-w-sm w-full">
-                        <div className="relative w-full">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                type="search"
-                                placeholder="Wyszukaj..."
-                                className="w-full pl-9 bg-muted/50 focus-visible:bg-background"
-                            />
-                        </div>
-                        <Button variant="outline" size="icon" className="shrink-0">
-                            <Plus className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="icon" className="shrink-0">
-                            <HelpCircle className="h-4 w-4" />
-                        </Button>
+                        <QuickActions />
+                        <Link href={"/about"}>
+                            <Button variant="outline" size="icon" className="shrink-0">
+                                <HelpCircle className="h-4 w-4" />
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
@@ -97,17 +113,29 @@ const Navbar = ({ user }: NavbarProps) => {
 
                 {/* PRAWA STRONA: Profil i Hamburger */}
                 <div className="flex items-center gap-4">
-                    <Link href="/profil" className="hidden md:flex items-center gap-3">
-                        <span className={`text-sm font-semibold ${onProfil}`}>
-                            {user?.display_name}
-                        </span>
-                        <Avatar className="h-8 w-8 border border-border" >
-                            <AvatarImage src={user?.avatar_url || undefined} alt={user?.display_name || "Użytkownik"} />
-                            <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                {user?.display_name?.charAt(0).toUpperCase() || "U"}
-                            </AvatarFallback>
-                        </Avatar>
-                    </Link>
+                    <div className="gap-1 hidden lg:flex">
+                        {PillItems.map((item) => (
+                            <Link key={item.href} href={item.href}>
+                                <Button variant="ghost" className={`text-xs ${item.color} ${item.bgColor} flex items-center gap-1 `} >
+                                    <item.icon className={`size-4 ${item.color}`} /> {item.value}
+                                </Button>
+                            </Link>
+                        ))}
+                    </div>
+                    <div>
+
+                        <Link href="/profil" className="hidden md:flex items-center gap-3">
+                            <span className={`text-sm font-semibold ${onProfil}`}>
+                                {user?.display_name}
+                            </span>
+                            <Avatar className="h-8 w-8 border border-border" >
+                                <AvatarImage src={user?.avatar_url || undefined} alt={user?.display_name || "Użytkownik"} />
+                                <AvatarFallback className="bg-primary/10 text-primary text-xs">
+                                    {user?.display_name?.charAt(0).toUpperCase() || "U"}
+                                </AvatarFallback>
+                            </Avatar>
+                        </Link>
+                    </div>
 
                     {/* Hamburger Mobile */}
                     <Button
@@ -125,17 +153,15 @@ const Navbar = ({ user }: NavbarProps) => {
             {isMobileOpen && (
                 <div className="md:hidden border-t border-border bg-background p-4 flex flex-col gap-4 shadow-lg">
                     <div className="flex items-center gap-2">
-                        <div className="relative w-full">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                type="search"
-                                placeholder="Wyszukaj..."
-                                className="w-full pl-9 bg-muted/50"
-                            />
+                        <div className="gap-1 flex w-full justify-between">
+                            {PillItems.map((item) => (
+                                <Link key={item.href} href={item.href} className="w-full" onClick={toggleMenu}>
+                                    <Button variant="ghost" className={`text-xs w-full ${item.color} ${item.bgColor} flex items-center gap-1 `} >
+                                        <item.icon className={`size-4 ${item.color}`} /> {item.value}
+                                    </Button>
+                                </Link>
+                            ))}
                         </div>
-                        <Button variant="outline" size="icon" className="shrink-0">
-                            <Plus className="h-4 w-4" />
-                        </Button>
                     </div>
 
                     <nav className="flex flex-col gap-2">
@@ -145,19 +171,20 @@ const Navbar = ({ user }: NavbarProps) => {
                     </nav>
 
                     <div className="pt-4 border-t border-border flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                        <Link href="/profil" onClick={toggleMenu} className="flex items-center gap-2">
                             <Avatar className="h-8 w-8">
                                 <AvatarFallback className="bg-primary/10 text-primary text-xs">
                                     {dummyUser.username.charAt(0).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
                             <span className="text-sm font-medium text-foreground">{dummyUser.username}</span>
-                        </div>
+                        </Link>
                         <LogoutButton />
                     </div>
                 </div>
-            )}
-        </header>
+            )
+            }
+        </header >
     );
 };
 
