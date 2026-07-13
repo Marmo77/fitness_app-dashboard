@@ -1,12 +1,12 @@
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
-const ToolTipWrapper = ({ children, icon, message, side = "top" }: { children: React.ReactNode, icon?: React.ComponentType, message: string, side?: "top" | "left" | "right" | "bottom" }) => {
+const ToolTipWrapper = ({ children, icon, message, side = "top", className }: { children: React.ReactNode, icon?: React.ComponentType, message: string, side?: "top" | "left" | "right" | "bottom", className?: string }) => {
 
     const Icon = icon;
     return (
         <Tooltip >
-            <TooltipTrigger>
+            <TooltipTrigger className={className}>
                 {children}
             </TooltipTrigger>
             <TooltipContent className='p-1.5 px-3 text-xs' side={side}>

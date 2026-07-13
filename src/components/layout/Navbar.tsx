@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 import { UserPillType, UserProfilType } from "@/lib/getUserData";
 import QuickActions from "../navigation/quickActions";
-import ToolTipWrapper from "../ToolTips";
+import ToolTipWrapper from "../ToolTipWrapper";
 
 interface NavbarProps {
     user: UserProfilType | null;

@@ -3,7 +3,7 @@ import AccessFilteringButton from '@/components/profil/access-filter-btn';
 import AccessSettings from '@/components/profil/AccessSettings';
 import EditProfilBtn from '@/components/profil/edit-profil-btn';
 import UserStatus from '@/components/profil/UserStatus';
-import ToolTipWrapper from '@/components/ToolTips';
+import ToolTipWrapper from '@/components/ToolTipWrapper';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { isUserAdmin } from '@/lib/AdminActions';
