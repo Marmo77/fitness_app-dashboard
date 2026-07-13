@@ -115,7 +115,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                 <div className="flex items-center gap-4">
                     <div className="gap-1 hidden lg:flex">
                         {PillItems.map((item) => (
-                            <Link key={item.href} href={item.href}>
+                            <Link key={item.value} href={item.href}>
                                 <Button variant="ghost" className={`text-xs ${item.color} ${item.bgColor} flex items-center gap-1 `} >
                                     <item.icon className={`size-4 ${item.color}`} /> {item.value}
                                 </Button>

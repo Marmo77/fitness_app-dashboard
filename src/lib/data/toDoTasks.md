@@ -11,7 +11,7 @@ Finish: 21:15
 
 ### Session 2 13.07
 Start: 13:35
-Finish: 14:45
+Finish: 14:55
 
 *To do:*
 - delete console log's
@@ -20,7 +20,7 @@ Finish: 14:45
 - Changing and adding functionalities for navbar
 - Navbar rewrite
 - Navbar working on mobile (hamburger-menu)
-
+*Session 2 finished*
 
 
 

@@ -13,7 +13,7 @@ export default function OrdersComponent({ initialOrders }: { initialOrders: Orde
 
     const [searchValue, setSearchValue] = useState<string>("");
     const [sortValue, setSortValue] = useState<string>("date");
-    const [filterOrder, setFilterOrder] = useState<"asc" | "desc">("asc");
+    const [filterOrder, setFilterOrder] = useState<"asc" | "desc">("desc");
 
     const handleApplyFilters = () => {
         startTransition(async () => {
@@ -39,10 +39,10 @@ export default function OrdersComponent({ initialOrders }: { initialOrders: Orde
     const handleResetFilters = () => {
         setSearchValue("");
         setSortValue("date");
-        setFilterOrder("asc");
+        setFilterOrder("desc");
 
         startTransition(async () => {
-            const resetOrders = await getSortedOrders("date", "asc");
+            const resetOrders = await getSortedOrders("date", "desc");
             setDisplayOrders(resetOrders);
         });
     };

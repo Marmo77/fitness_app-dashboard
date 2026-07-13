@@ -18,7 +18,7 @@ export type OrderProps = {
 
 export const getOrdersFromDB = async (): Promise<OrderProps[]> => {
     const supabase = await createClient();
-    const { data: orders, error } = await supabase.from("orders").select("*");
+    const { data: orders, error } = await supabase.from("orders").select("*").order("date", { ascending: false });
 
     if (error) {
         throw error;
