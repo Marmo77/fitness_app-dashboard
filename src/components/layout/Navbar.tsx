@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Plus, HelpCircle, HourglassIcon, Contact2Icon, DollarSignIcon } from "lucide-react";
-import { company, dummyUser } from "@/lib/constants";
+import { Menu, X, HelpCircle, HourglassIcon, Contact2Icon, DollarSignIcon } from "lucide-react";
+import { company } from "@/lib/constants";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -155,7 +155,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                     <div className="flex items-center gap-2">
                         <div className="gap-1 flex w-full justify-between">
                             {PillItems.map((item) => (
-                                <Link key={item.href} href={item.href} className="w-full" onClick={toggleMenu}>
+                                <Link key={item.value} href={item.href} className="w-full" onClick={toggleMenu}>
                                     <Button variant="ghost" className={`text-xs w-full ${item.color} ${item.bgColor} flex items-center gap-1 `} >
                                         <item.icon className={`size-4 ${item.color}`} /> {item.value}
                                     </Button>
@@ -174,10 +174,10 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                         <Link href="/profil" onClick={toggleMenu} className="flex items-center gap-2">
                             <Avatar className="h-8 w-8">
                                 <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                    {dummyUser.username.charAt(0).toUpperCase()}
+                                    {user?.display_name?.charAt(0).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
-                            <span className="text-sm font-medium text-foreground">{dummyUser.username}</span>
+                            <span className="text-sm font-medium text-foreground">{user?.display_name}</span>
                         </Link>
                         <LogoutButton />
                     </div>
