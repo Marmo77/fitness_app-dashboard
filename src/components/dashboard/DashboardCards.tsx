@@ -101,7 +101,7 @@ const DashboardCards = async () => {
             </div>
 
             {/* DEV INFO */}
-            <div className='flex w-full flex-col p-4 gap-1 rounded-lg border text-muted-foreground'>
+            {/* <div className='flex w-full flex-col p-4 gap-1 rounded-lg border text-muted-foreground'>
                 <p className="text-xs uppercase font-bold mb-2">Dev Data Debug:</p>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -117,7 +117,7 @@ const DashboardCards = async () => {
                         <p>Admins: {ordersKPIData.users.totalAdmins}</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

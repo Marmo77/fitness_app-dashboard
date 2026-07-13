@@ -18,7 +18,6 @@ const AdminsList = async () => {
 
     const userProfil: UserProfilType | null = await getUserProfileDB();
     const adminList = await GetAdminsList()
-    console.log(adminList)
 
 
     const user_id = userProfil?.id || null;

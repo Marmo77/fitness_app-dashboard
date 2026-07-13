@@ -14,6 +14,6 @@ Start: 13:35
 Finish: 14:45
 
 *To do:*
-- Make the last 8 orders visible on dashboard
 - delete console log's
 - DashboardCards -> async component
+- Make the last 8 orders visible on dashboard

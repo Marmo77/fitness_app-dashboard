@@ -41,6 +41,8 @@ export const getSortedOrders = async (sortValue: string, filterOrder: "asc" | "d
         throw error;
     }
 
+    if (!orders) return [] as OrderProps[];
+
     return orders as OrderProps[];
 }
 
@@ -103,3 +105,21 @@ export const getOrdersStatsKPI = async () => {
         // canceledToCompletedOrders
     }
 }
+
+export const getNewestOrders = async (amount: number = 8) => {
+    const supabase = await createClient();
+
+    const { data: orders, error: getError } =
+        await supabase.from("orders").select("*")
+            .order("date", { ascending: false }).limit(amount);
+
+    if (getError) {
+        throw new Error(getError.message)
+    }
+
+    if (!orders) {
+        throw new Error("Brak zamówień")
+    }
+
+    return orders as OrderProps[];
+} 
