@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Plus, HelpCircle, HourglassIcon, Contact2Icon, DollarSignIcon } from "lucide-react";
-import { company, dummyUser } from "@/lib/constants";
+import { Menu, X, HelpCircle, HourglassIcon, Contact2Icon, DollarSignIcon, User } from "lucide-react";
+import { company } from "@/lib/constants";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 import { UserPillType, UserProfilType } from "@/lib/getUserData";
 import QuickActions from "../navigation/quickActions";
+import ToolTipWrapper from "../ToolTipWrapper";
 
 interface NavbarProps {
     user: UserProfilType | null;
@@ -47,7 +48,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
 
     const PillItems = [
         {
-            alt: "",
+            alt: "Do zarobienia z oczekujących zamówień",
             value: pillInfos?.moneyFromWaitingOrders,
             icon: DollarSignIcon,
             color: "text-green-500",
@@ -63,7 +64,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
             href: "/historia",
         },
         {
-            alt: "",
+            alt: "Ilosc wszystkich użytkowników",
             value: pillInfos?.totalUsers,
             icon: Contact2Icon,
             color: "text-blue-500",
@@ -85,14 +86,13 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                         {companyBack && <span className="text-foreground"> {companyBack}</span>}
                     </Link>
 
-                    {/* Desktop Wyszukiwarka i Przyciski */}
                     <div className="hidden md:flex items-center gap-2 max-w-sm w-full">
                         <QuickActions />
-                        <Link href={"/about"}>
+                        <ToolTipWrapper message="O aplikacji" side="bottom">
                             <Button variant="outline" size="icon" className="shrink-0">
                                 <HelpCircle className="h-4 w-4" />
                             </Button>
-                        </Link>
+                        </ToolTipWrapper>
                     </div>
                 </div>
 
@@ -115,26 +115,31 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                 <div className="flex items-center gap-4">
                     <div className="gap-1 hidden lg:flex">
                         {PillItems.map((item) => (
-                            <Link key={item.href} href={item.href}>
-                                <Button variant="ghost" className={`text-xs ${item.color} ${item.bgColor} flex items-center gap-1 `} >
-                                    <item.icon className={`size-4 ${item.color}`} /> {item.value}
-                                </Button>
-                            </Link>
+                            <ToolTipWrapper key={item.value} message={item.alt} side="bottom">
+
+                                <Link href={item.href}>
+                                    <Button variant="ghost" className={`text-xs ${item.color} ${item.bgColor} flex items-center gap-1 `} >
+                                        <item.icon className={`size-4 ${item.color}`} /> {item.value}
+                                    </Button>
+                                </Link>
+                            </ToolTipWrapper>
                         ))}
                     </div>
                     <div>
+                        <ToolTipWrapper message="Przejdź do profilu" icon={User} side="bottom">
 
-                        <Link href="/profil" className="hidden md:flex items-center gap-3">
-                            <span className={`text-sm font-semibold ${onProfil}`}>
-                                {user?.display_name}
-                            </span>
-                            <Avatar className="h-8 w-8 border border-border" >
-                                <AvatarImage src={user?.avatar_url || undefined} alt={user?.display_name || "Użytkownik"} />
-                                <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                    {user?.display_name?.charAt(0).toUpperCase() || "U"}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Link>
+                            <Link href="/profil" className="hidden md:flex items-center gap-3">
+                                <span className={`text-sm font-semibold ${onProfil}`}>
+                                    {user?.display_name}
+                                </span>
+                                <Avatar className="h-8 w-8 border border-border" >
+                                    <AvatarImage src={user?.avatar_url || undefined} alt={user?.display_name || "Użytkownik"} />
+                                    <AvatarFallback className="bg-primary/10 text-primary text-xs">
+                                        {user?.display_name?.charAt(0).toUpperCase() || "U"}
+                                    </AvatarFallback>
+                                </Avatar>
+                            </Link>
+                        </ToolTipWrapper>
                     </div>
 
                     {/* Hamburger Mobile */}
@@ -155,7 +160,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                     <div className="flex items-center gap-2">
                         <div className="gap-1 flex w-full justify-between">
                             {PillItems.map((item) => (
-                                <Link key={item.href} href={item.href} className="w-full" onClick={toggleMenu}>
+                                <Link key={item.value} href={item.href} className="w-full" onClick={toggleMenu}>
                                     <Button variant="ghost" className={`text-xs w-full ${item.color} ${item.bgColor} flex items-center gap-1 `} >
                                         <item.icon className={`size-4 ${item.color}`} /> {item.value}
                                     </Button>
@@ -174,10 +179,10 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                         <Link href="/profil" onClick={toggleMenu} className="flex items-center gap-2">
                             <Avatar className="h-8 w-8">
                                 <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                    {dummyUser.username.charAt(0).toUpperCase()}
+                                    {user?.display_name?.charAt(0).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
-                            <span className="text-sm font-medium text-foreground">{dummyUser.username}</span>
+                            <span className="text-sm font-medium text-foreground">{user?.display_name}</span>
                         </Link>
                         <LogoutButton />
                     </div>

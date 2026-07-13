@@ -4,6 +4,7 @@ import { MdDone, MdOutlineHourglassEmpty, MdCancel } from "react-icons/md";
 import { type OrderProps } from '@/lib/data/orders';
 import { handleCopyToClipboard } from '@/lib/functions';
 import { OrdersHeaderSchema } from '@/lib/data/orderSchema';
+import ToolTipWrapper from '../ToolTipWrapper';
 
 const OrderTable = ({ orders }: { orders: OrderProps[] }) => {
     return (
@@ -34,9 +35,11 @@ const OrderTable = ({ orders }: { orders: OrderProps[] }) => {
                                 </TableCell>
                                 <TableCell
                                     onClick={() => handleCopyToClipboard(order.customerEmail)}
-                                    className='cursor-pointer underline-offset-2 hover:underline decoration-primary hover:text-primary text-left pr-4'
+                                    className='text-left px-2'
                                 >
-                                    {order.customerEmail}
+                                    <ToolTipWrapper message='Kopiuj email' side='right' className='cursor-pointer decoration-primary hover:text-primary underline-offset-2 hover:underline'>
+                                        {order.customerEmail}
+                                    </ToolTipWrapper>
                                 </TableCell>
                             </TableRow>
                         )

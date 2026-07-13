@@ -3,6 +3,7 @@ import AccessFilteringButton from '@/components/profil/access-filter-btn';
 import AccessSettings from '@/components/profil/AccessSettings';
 import EditProfilBtn from '@/components/profil/edit-profil-btn';
 import UserStatus from '@/components/profil/UserStatus';
+import ToolTipWrapper from '@/components/ToolTipWrapper';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { isUserAdmin } from '@/lib/AdminActions';
@@ -27,7 +28,20 @@ const ProfilPage = async ({ searchParams }: ProfilPageProps) => {
     const currentFilter = (filter as "everyone" | "admin" | "user") || "everyone";
 
 
-
+    const accessMenu = [
+        {
+            filter: "everyone",
+            tooltip: "Wszyscy użytkownicy",
+        },
+        {
+            filter: "admin",
+            tooltip: "Admini",
+        },
+        {
+            filter: "user",
+            tooltip: "Użytkownicy",
+        }
+    ]
 
     return (
         <main className="flex-1 container max-w-7xl mx-auto py-8 px-4 md:py-12 lg:px-8 flex flex-col gap-8">
@@ -51,7 +65,9 @@ const ProfilPage = async ({ searchParams }: ProfilPageProps) => {
                         </h2>
                     </div>
                     {/* Edit button */}
-                    <EditProfilBtn />
+                    <ToolTipWrapper message='Edytuj profil' side='top'>
+                        <EditProfilBtn />
+                    </ToolTipWrapper>
                 </div>
                 <div className="w-auto flex justify-center items-center">
                     <LogoutButton />
@@ -75,12 +91,11 @@ const ProfilPage = async ({ searchParams }: ProfilPageProps) => {
                         <div className='flex flex-col gap-0.5'>
                             <span className="text-sm text-muted-foreground mt-1">Filtruj:</span>
                             <div className='flex gap-0.5'>
-                                <AccessFilteringButton filter_choice={{ filter: "everyone" }} current_filter={currentFilter} />
-                                <AccessFilteringButton filter_choice={{ filter: "admin" }} current_filter={currentFilter} />
-                                <AccessFilteringButton filter_choice={{ filter: "user" }} current_filter={currentFilter} />
-                                {/* <Button className={`bg-primary hover:bg-primary/80 px-7 ${!isActiveFilter ? "bg-primary" : "bg-primary/50"}`} ><FaUserGroup /></Button>
-                                <Button className={`bg-primary hover:bg-primary/80 px-6 ${isActiveFilter ? "bg-primary" : "bg-primary/50"}`} ><Crown /></Button>
-                                <Button className={`bg-primary hover:bg-primary/80 px-6 ${!isActiveFilter ? "bg-primary" : "bg-primary/50"}`} ><User2 /></Button> */}
+                                {accessMenu.map((item) => (
+                                    <ToolTipWrapper key={item.filter} message={item.tooltip} side='top'>
+                                        <AccessFilteringButton filter_choice={{ filter: item.filter as "everyone" | "admin" | "user" }} current_filter={currentFilter} />
+                                    </ToolTipWrapper>
+                                ))}
                             </div>
                         </div>
                     )}

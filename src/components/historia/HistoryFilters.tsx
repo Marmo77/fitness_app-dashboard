@@ -12,6 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { SortOptions } from '@/app/(main)/historia/actions'
+import ToolTipWrapper from '../ToolTipWrapper'
 
 type HistoryFiltersProps = {
     searchValue: string;
@@ -57,18 +58,25 @@ const HistoryFilters = ({
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <Button onClick={handleOrderFilter} className="cursor-pointer">
-                    {filterOrder === "asc" ? <ArrowUp /> : <ArrowDown />}
-                </Button>
+                <ToolTipWrapper message={filterOrder === "asc" ? "Rosnąco" : "Malejąco"} side='top'>
+
+                    <Button onClick={handleOrderFilter} className="cursor-pointer">
+                        {filterOrder === "asc" ? <ArrowUp /> : <ArrowDown />}
+                    </Button>
+                </ToolTipWrapper>
             </div>
 
             <div className='grid grid-cols-2 lg:flex w-full lg:w-auto gap-3'>
-                <Button onClick={handleApplyFilter} variant="ghost" className='border-border w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
-                    <FaMagnifyingGlass />
-                </Button>
-                <Button onClick={handleResetFilters} variant="ghost" className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 w-full lg:w-auto transition-all cursor-pointer'>
-                    <X />
-                </Button>
+                <ToolTipWrapper message='Wyszukaj' side="top">
+                    <Button onClick={handleApplyFilter} variant="ghost" className='border-border w-full lg:w-auto hover:border-primary hover:bg-primary/10 duration-300 transition-all cursor-pointer'>
+                        <FaMagnifyingGlass />
+                    </Button>
+                </ToolTipWrapper>
+                <ToolTipWrapper message='Resetuj Filtry' side="top">
+                    <Button onClick={handleResetFilters} variant="ghost" className='border-border hover:border-destructive hover:bg-destructive/10 duration-300 w-full lg:w-auto transition-all cursor-pointer'>
+                        <X />
+                    </Button>
+                </ToolTipWrapper>
             </div>
         </Card>
     )
