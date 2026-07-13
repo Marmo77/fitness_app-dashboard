@@ -93,8 +93,8 @@ const DashboardCards = async () => {
     ];
 
     return (
-        <div className="flex w-full flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <div className="flex w-full h-full flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-4 w-full">
                 {cardsGroups.map((group, idx) => (
                     <KpiCardCarousel key={idx} group={group} />
                 ))}

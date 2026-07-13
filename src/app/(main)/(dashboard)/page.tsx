@@ -17,12 +17,8 @@ const MainPage = async () => {
             <section className="w-full flex flex-col items-start justify-start gap-4">
                 {/* Dashboard with KPI Cards (4 boxes) */}
                 <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <DashboardCards />
-                    </div>
-                    <div>
-                        <DashboardChart data={chartData} />
-                    </div>
+                    <DashboardCards />
+                    <DashboardChart data={chartData} />
                 </section>
                 <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-2">
                     {/* history orders - Recent (newest 8 orders) */}
