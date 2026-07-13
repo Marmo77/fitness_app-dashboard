@@ -18,8 +18,9 @@ Finish: 14:45
 - DashboardCards -> async component
 - Make the last 8 orders visible on dashboard
 - Changing and adding functionalities for navbar
-
 - Navbar rewrite
+- Navbar working on mobile (hamburger-menu)
+
 
 
 

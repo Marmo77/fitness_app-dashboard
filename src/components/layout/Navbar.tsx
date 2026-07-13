@@ -47,6 +47,14 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
 
     const PillItems = [
         {
+            alt: "",
+            value: pillInfos?.moneyFromWaitingOrders,
+            icon: DollarSignIcon,
+            color: "text-green-500",
+            bgColor: "hover:bg-green-50",
+            href: "/historia",
+        },
+        {
             alt: "Oczekujące zamówienia",
             value: pillInfos?.waiting,
             icon: HourglassIcon,
@@ -62,14 +70,6 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
             bgColor: "hover:bg-blue-50",
             href: "/profil",
         },
-        {
-            alt: "",
-            value: pillInfos?.moneyFromWaitingOrders,
-            icon: DollarSignIcon,
-            color: "text-green-500",
-            bgColor: "hover:bg-green-50",
-            href: "/historia",
-        }
     ]
 
 
