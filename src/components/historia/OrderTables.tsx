@@ -9,7 +9,7 @@ const OrderTable = ({ orders }: { orders: OrderProps[] }) => {
     return (
         <div className="flex flex-col gap-4">
             <Table className='max-h-[450px] border relative'>
-                <TableHeader className="border-b border-primary sticky top-0 z-50 bg-background">
+                <TableHeader className="border-b border-primary bg-background">
                     <TableRow className='hover:bg-transparent'>
                         {Object.values(OrdersHeaderSchema).map((header) => (
                             <TableHead key={header}>{header}</TableHead>

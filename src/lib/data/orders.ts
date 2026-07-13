@@ -41,6 +41,8 @@ export const getSortedOrders = async (sortValue: string, filterOrder: "asc" | "d
         throw error;
     }
 
+    if (!orders) return [] as OrderProps[];
+
     return orders as OrderProps[];
 }
 
@@ -58,11 +60,6 @@ export const getOrdersStatsKPI = async () => {
 
     const supabase = await createClient();
 
-    // const [orders, users] = await Promise.all([
-    //     supabase.from("orders").select("*"),
-    //     supabase.from("users").select("*")
-    // ])
-
     const { data: orders, error: orderError } = await supabase.from("orders").select("*");
     const { data: users, error: userError } = await supabase.from("profiles").select("*");
 
@@ -75,7 +72,6 @@ export const getOrdersStatsKPI = async () => {
     const canceledOrders: number = orders?.filter((order) => order.status === "Anulowane").length ?? 0;
     const ordersToCanceled: number = canceledOrders / completedOrders * 100; // in %
     const revenueForCompletedOrders: number = totalRevenue / completedOrders;
-
     // USERS
     const totalUsers = users?.length;
     const totalAdmins = users?.filter((user) => user.is_admin == true).length;
@@ -109,3 +105,21 @@ export const getOrdersStatsKPI = async () => {
         // canceledToCompletedOrders
     }
 }
+
+export const getNewestOrders = async (amount: number = 8) => {
+    const supabase = await createClient();
+
+    const { data: orders, error: getError } =
+        await supabase.from("orders").select("*")
+            .order("date", { ascending: false }).limit(amount);
+
+    if (getError) {
+        throw new Error(getError.message)
+    }
+
+    if (!orders) {
+        throw new Error("Brak zamówień")
+    }
+
+    return orders as OrderProps[];
+} 

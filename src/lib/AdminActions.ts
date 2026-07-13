@@ -15,7 +15,6 @@ export async function isUserAdmin(): Promise<boolean> {
         return false;
     }
     const { data: admin } = await supabase.from("profiles").select("id, is_admin").eq("id", userID).single();
-    // console.log(admin)
 
     if (admin?.id === userID && admin?.is_admin === true) {
         return true;
