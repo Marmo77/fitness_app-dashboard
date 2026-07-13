@@ -24,8 +24,14 @@ Finish: 14:55
 
 ### Session 3 13.07
 Start: 15:20
-Finish: 16:00
+Finish: 16:40
 
 - Fix history page on start
 - Make chart for income with filter in data range (from-to) -> base: all-time
-- Tooltips for most actions
+- some fixes on dashboard
+- Tooltips for most actions (Navbar, Profile, History)
+
+- history pageing - all orders data need to be visible here (pagination or show first 20 or 50 or 100 orders per page)
+- /dodaj - make it adding orders to the database.
+  
+- Finish.
