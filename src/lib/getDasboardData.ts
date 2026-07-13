@@ -22,6 +22,5 @@ export const GetAdminsList = async (): Promise<IAdminList[]> => {
     if (error) {
         throw error
     }
-    console.log(admins)
     return admins
 }

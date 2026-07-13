@@ -58,11 +58,6 @@ export const getOrdersStatsKPI = async () => {
 
     const supabase = await createClient();
 
-    // const [orders, users] = await Promise.all([
-    //     supabase.from("orders").select("*"),
-    //     supabase.from("users").select("*")
-    // ])
-
     const { data: orders, error: orderError } = await supabase.from("orders").select("*");
     const { data: users, error: userError } = await supabase.from("profiles").select("*");
 
@@ -75,7 +70,6 @@ export const getOrdersStatsKPI = async () => {
     const canceledOrders: number = orders?.filter((order) => order.status === "Anulowane").length ?? 0;
     const ordersToCanceled: number = canceledOrders / completedOrders * 100; // in %
     const revenueForCompletedOrders: number = totalRevenue / completedOrders;
-
     // USERS
     const totalUsers = users?.length;
     const totalAdmins = users?.filter((user) => user.is_admin == true).length;
