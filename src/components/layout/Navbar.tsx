@@ -11,7 +11,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 import { UserPillType, UserProfilType } from "@/lib/getUserData";
 import QuickActions from "../navigation/quickActions";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import ToolTipWrapper from "../ToolTips";
 
 interface NavbarProps {
@@ -89,7 +88,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
 
                     <div className="hidden md:flex items-center gap-2 max-w-sm w-full">
                         <QuickActions />
-                        <ToolTipWrapper message="O aplikacji">
+                        <ToolTipWrapper message="O aplikacji" side="bottom">
                             <Button variant="outline" size="icon" className="shrink-0">
                                 <HelpCircle className="h-4 w-4" />
                             </Button>
@@ -116,7 +115,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                 <div className="flex items-center gap-4">
                     <div className="gap-1 hidden lg:flex">
                         {PillItems.map((item) => (
-                            <ToolTipWrapper key={item.value} message={item.alt}>
+                            <ToolTipWrapper key={item.value} message={item.alt} side="bottom">
 
                                 <Link href={item.href}>
                                     <Button variant="ghost" className={`text-xs ${item.color} ${item.bgColor} flex items-center gap-1 `} >
@@ -127,7 +126,7 @@ const Navbar = ({ user, pillInfos }: NavbarProps) => {
                         ))}
                     </div>
                     <div>
-                        <ToolTipWrapper message="Przejdź do profilu" icon={User}>
+                        <ToolTipWrapper message="Przejdź do profilu" icon={User} side="bottom">
 
                             <Link href="/profil" className="hidden md:flex items-center gap-3">
                                 <span className={`text-sm font-semibold ${onProfil}`}>
