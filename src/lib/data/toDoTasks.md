@@ -22,7 +22,10 @@ Finish: 14:55
 - Navbar working on mobile (hamburger-menu)
 *Session 2 finished*
 
+### Session 3 13.07
+Start: 15:20
+Finish: 16:00
 
-
+- Fix history page on start
+- Make chart for income with filter in data range (from-to) -> base: all-time
 - Tooltips for most actions
-- Make chart for expenses and income

@@ -122,4 +122,31 @@ export const getNewestOrders = async (amount: number = 8) => {
     }
 
     return orders as OrderProps[];
-} 
+}
+
+export const getChartData = async () => {
+    const orders = await getOrdersFromDB();
+
+    const groupedData = orders.reduce((acc, order) => {
+        const [year, month, day] = order.date.split('-');
+        const formattedDate = `${day}.${month}`;
+
+        if (!acc[formattedDate]) {
+            acc[formattedDate] = { date: formattedDate, revenue: 0, orderCount: 0 };
+        }
+
+        if (order.status !== "Anulowane") {
+            acc[formattedDate].revenue += Number(order.price);
+        }
+
+        acc[formattedDate].orderCount += 1;
+
+        return acc;
+    }, {} as Record<string, { date: string; revenue: number; orderCount: number }>);
+
+    return Object.values(groupedData).sort((a, b) => {
+        const [dayA, monthA] = a.date.split('.');
+        const [dayB, monthB] = b.date.split('.');
+        return `${monthA}${dayA}`.localeCompare(`${monthB}${dayB}`);
+    });
+};
